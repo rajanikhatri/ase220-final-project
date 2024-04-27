@@ -124,3 +124,5 @@ const userController = {
     res.status(200).json("Logout successfully!");
   },
 };
+
+module.exports = userController;
