@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const userRoutes = require("../backend/routes/userRoutes");
 const countryRoutes = require("../backend/routes/countryRoutes");
+const cityRoutes = require("../backend/routes/cityRoutes");
 
 dotenv.config();
 connectDB();
@@ -18,6 +19,7 @@ app.use(bodyParser.json());
 
 app.use("/v1/user", userRoutes);
 app.use("/v1/country", countryRoutes);
+app.use("/v1/city", cityRoutes);
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, console.log(`Server started on PORT ${PORT}`));

@@ -11,17 +11,6 @@ const commentSchema = mongoose.Schema(
       ref: "User",
       required: true,
     },
-    replies: [
-      {
-        reply: {
-          type: String,
-        },
-        user: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "User",
-        },
-      },
-    ],
   },
   {
     timestamps: true,

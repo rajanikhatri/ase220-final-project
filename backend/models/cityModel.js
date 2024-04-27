@@ -38,12 +38,11 @@ const citySchema = mongoose.Schema(
       ref: "User",
       required: true,
     },
-    places: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Place",
-      },
-    ],
+    country: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Country",
+      required: true,
+    },
   },
   {
     timestamp: true,
