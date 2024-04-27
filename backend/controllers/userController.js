@@ -101,7 +101,7 @@ const userController = {
       if (err) {
         console.log(err);
       }
-      refreshToken.filter((token) => token != refreshToken);
+      refreshTokens.filter((token) => token != refreshToken);
       const newAccessToken = userController.generateAccessToken(user);
       const newRefreshToken = userController.generateRefreshToken(user);
       refreshTokens.push(newRefreshToken);
