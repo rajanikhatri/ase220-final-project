@@ -411,10 +411,9 @@
       }
 
       function populateUpdateModal(Country) {
-        document.getElementById("inputcountry").value = Country.country;
-        document.getElementById("inputRating").value = Country.ratings;
-        document.getElementById("inputDescription").value = Country.message;
-        document.getElementById("inputAge").value = Country.id;
+        document.getElementById("inputcountry").value = Country.country || "";
+        document.getElementById("inputRating").value = Country.ratings || "";
+        document.getElementById("inputDescription").value = Country.message || "";
 
       }
         
@@ -520,7 +519,7 @@
         }
       }
 
-      //have to test later
+      //done
       function deleteCountry(countryId){
         const user = JSON.parse(localStorage.getItem("user"));
         if (!user || !user.accessToken) {
@@ -529,21 +528,76 @@
         }
 
         const accessToken = user.accessToken
+        console.log(accessToken)
         axios.delete(`http://localhost:8000/v1/countries/${countryId}`,  {
             headers: {
-                Authorization: `Bearer ${accessToken}`, 
+                token: `Bearer ${accessToken}`, 
             },
         }).then((res)=> {
             console.log(res.data);
+            const cardToDelete = $(`#${countryId}`); 
+            cardToDelete.remove(); 
+
+            
+        })
+      }
+
+      function createCountry(countryData){
+        const user = JSON.parse(localStorage.getItem('user'))
+        if (!user || !user.accessToken) {
+            console.log("User not authenticated");
+            return;
+        }
+
+        const accessToken = user.accessToken
+        console.log(accessToken)
+
+        axios.post("http://localhost:8000/v1/countries", countryData, {
+        headers: {
+            token: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+        },
+        }).then((res)=> {
+            console.log('country created: ', res.data)
+            $("#add_modal").modal("hide");
+            window.location.href = "/countries"; 
+        })
+      }
+
+      function updateCountry(countryId, updatedData){
+        const user = JSON.parse(localStorage.getItem('user'))
+        if(!user || !user.accessToken){
+            console.log('user not authenticated')
+        }
+        const accessToken = user.accessToken
+        axios.put(`http://localhost:8000/v1/countries/${countryId}`, updatedData, {
+            headers: {
+                token: `Bearer ${accessToken}`,
+                "Content-Type": "application/json",
+            },
+        }).then((res)=> {
+            console.log('country updated: ', res.data)
+            $("#update_modal").modal("hide");
+            axios.get('http://localhost:8000/v1/countries', {
+                headers: {
+                    token: `Bearer ${accessToken}`
+                }
+            }).then((response)=> {
+                Countries = response.data;
+                $("#country-container").empty();
+                displayCards(Countries); 
+            })
+           
         })
       }
 
     
         $(() => {
-        //DELETE------------------------------------have to test later
+        //DELETE----DONE
           $(document).on("click", ".btn-delete", function () {
             let parentDiv = $(this).parent().parent().parent();
             let countryId = parentDiv.attr("id");
+            console.log(countryId)
             if (countryId) {
               deleteCountry(countryId)
               $("#country-container").empty();
@@ -559,86 +613,28 @@
             populateUpdateModal(editingCountry);
           });
 
-          //UPDATE-----------------------------------------
+          //UPDATE--------DONE
           $(document).on("click", "#edit-submit", function () {
-            const editingCountry = getCountriesById(editingCountryId);
+            const editingCountry = getCountryById(editingCountryId);
             var updatedCountry = {
-              id: editingCountry.id,
               avatar: editingCountry.avatar,
               country: $("#inputcountry").val() || editingCountry.country,
               ratings: $("#inputRating").val() || editingCountry.ratings,
               message: $("#inputDescription").val() || editingCountry.message,
-              cities: editingCountry.cities || []
             };
-
-            const index = Countries.findIndex((Country) => Country.id === editingCountryId);
-            if (index !== -1) {
-              Countries[index] = updatedCountry;
-            $("#country-container").empty();
-            displayCards(Countries);
-            }
-            $("#update_modal").modal("hide");
-            $.ajax({
-                      type: "PUT",
-                      url: `${url}/api/blobs/${id}`,
-                      data: JSON.stringify(Countries),
-                      contentType: "application/json; charset=utf-8",
-                      dataType: "json",
-                    success: function(xhr,data,response){   
-                          axios
-                            .get(`${url}/api/blobs/${id}`, {})
-                            .then(function(res){
-                                Countries = res.data.content
-                                console.log(Countries)
-                                displayCards(Countries);
-                                displayPageBasedPagination(Countries);
-                                
-                              }).catch(function(err){
-                                console.log(err)
-                              })
-                      },
-                      error: function(errMsg) {
-                          alert(errMsg);
-                      }
-                    });
+           updateCountry(editingCountryId, updatedCountry)
           });
 
-          //CREATE COUNTRY
+          //CREATE COUNTRY------DONE
           $(document).on("click", "#add-submit", function () {
-            var addingCountry = {
-              id: generateUniqueId(),
+            var countryData = {
               avatar: $("#inputImageAdd").val(),
               country: $("#inputcountryAdd").val(),
               ratings: $("#inputRatingAdd").val(),
-              message: $("#inputDescriptionAdd").val(),
-              cities: [],
-                       
+              message: $("#inputDescriptionAdd").val()                 
             };
-            Countries.unshift(addingCountry);
-            $.ajax({
-                      type: "PUT",
-                      url: `${url}/api/blobs/${id}`,
-                      data: JSON.stringify(Countries),
-                      contentType: "application/json; charset=utf-8",
-                      dataType: "json",
-                      success: function(xhr,data,response){
-                            axios
-                            .get(`${url}/api/blobs/${id}`, {})
-                            .then(function(res){
-                                Countries = res.data.content
-                                console.log(Countries)
-                                displayCards(Countries);
-                                displayPageBasedPagination(Countries);
-                                
-                              }).catch(function(err){
-                                console.log(err)
-                              })
-                        },
-                        error: function(errMsg) {
-                            alert(errMsg);
-                        }
-                    });
-                        
+            createCountry(countryData)
+            
               });
             });
           });

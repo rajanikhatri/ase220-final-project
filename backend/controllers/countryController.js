@@ -13,7 +13,10 @@ const countryController = {
         ratings,
         createdBy,
       });
-
+      const existingCountry = await Country.findOne({ country });
+      if (existingCountry) {
+        return res.status(409).json("Country with this name already exists");
+      }
       const savedCountry = await newCountry.save();
       res.status(201).json(savedCountry);
     } catch (err) {
