@@ -9,6 +9,7 @@ const countryRoutes = require("../backend/routes/countryRoutes");
 const cityRoutes = require("../backend/routes/cityRoutes");
 const placeRoutes = require("../backend/routes/placeRoutes");
 const commentRoutes = require("../backend/routes/commentRoutes");
+const replyRoutes = require("../backend/routes/replyRoutes");
 
 dotenv.config();
 connectDB();
@@ -46,6 +47,15 @@ app.use(
     next();
   },
   commentRoutes
+);
+
+app.use(
+  "/v1/comments/:commentId/replies",
+  (req, res, next) => {
+    req.commentId = req.params.commentId;
+    next();
+  },
+  replyRoutes
 );
 
 const PORT = process.env.PORT || 8000;
