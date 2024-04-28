@@ -20,6 +20,30 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.json());
 
+//static routes
+app.use(express.static(path.join(__dirname, "frontend")));
+
+//web routes
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "frontend", "index.html"));
+});
+
+app.get("/countries", (req, res) => {
+  res.sendFile(path.join(__dirname, "frontend", "index.html"));
+});
+
+app.get("/cites", (req, res) => {
+  res.sendFile(path.join(__dirname, "frontend", "cities.html"));
+});
+
+app.get("/places", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "places.html"));
+});
+
+app.get("/comments", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "comments.html"));
+});
+//api routes
 app.use("/v1/user", userRoutes);
 app.use("/v1/countries", countryRoutes);
 app.use(
