@@ -418,8 +418,8 @@
 
       }
         
-      function getCountriesById(id) {
-        return Countries.find((Country) => Country.id === id);
+      function getCountryById(id) {
+        return Countries.find((Country) => Country._id === id);
       }
 
       //done
@@ -552,18 +552,10 @@
             }
           });
 
-          //POPULATE UPDATE - 
+          //POPULATE UPDATE - DONE
           $(document).on("click", "#btn-edit", function () {
-            editCountryIdText = $(this)
-              .parents()
-              .parents()
-              .eq(1)
-              .find("div")
-              .find("ul")
-              .find("li[id]")
-              .text();
-            editingCountryId = editCountryIdText.split(" ")[1];
-            const editingCountry = getCountriesById(editingCountryId);
+            editingCountryId = ($(this).parents().parents().eq(1).attr('id'))
+            const editingCountry = getCountryById(editingCountryId);
             populateUpdateModal(editingCountry);
           });
 
