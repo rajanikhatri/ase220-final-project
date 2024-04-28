@@ -1,0 +1,71 @@
+.card.h-100 {
+  border: none; /* Removes the border */
+  box-shadow: none; /* Removes the shadow */
+  background: transparent; /* Makes the background transparent */
+}
+.list-unstyled {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; /* This is a common font stack in Bootstrap */
+  font-size: 1rem; /* Adjust the font size as needed */
+  font-weight: normal; /* Adjust the font weight as needed, if you want it bold use 'font-weight: bold;' */
+  color: #333; /* This is a typical text color, adjust as needed */
+  line-height: 1.5; /* This is the default line-height in Bootstrap, adjust as needed */
+}
+.carousel-item img {
+  width: 100%; /* Full width */
+  height: 400px; /*  height */
+  object-fit: cover; /* This will cover the height of the carousel without stretching the image */
+  transition: 0.6s;
+}
+.card-img-top {
+  width: 100%; /* Full width */
+  height: 400px; /*  height */
+  object-fit: cover; /* This will cover the height of the carousel without stretching the image */
+  transition: 0.6s;
+}
+/* Position the heart button in the top-right corner */
+.heart-button {
+  position: absolute;
+  top: 10px; /* Adjust as needed */
+  right: 10px; /* Adjust as needed */
+  z-index: 10; /* Ensure it's above other content */
+  color: rgb(9, 9, 8); /* Change the color */
+  font-size: 30px; /* Increase the size */
+  border: 2px solid rgb(82, 74, 98); /* Add a border */
+}
+
+/* Position the carousel control button */
+.carousel-control-next {
+  position: absolute;
+  bottom: 10px; /* Adjust as needed */
+  right: 10px; /* Adjust as needed */
+}
+/* chnaging background color for the explore button */
+.explore {
+  background-color: #e6e6fa;
+}
+
+/* make the navigation bar sticky */
+.makeItFixed {
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0; /* Adjust if needed */
+  z-index: 1020; /* Ensure it's higher than most other elements but adjust according to your layout */
+}
+
+.bg-body-tertiary {
+  position: -webkit-sticky; /* For Safari */
+  position: sticky;
+  top: 65px; /* This will make the navbar stick 50px from the top */
+}
+.btn {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 4px;
+  transition: 0.6s;
+}

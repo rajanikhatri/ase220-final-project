@@ -29,6 +29,7 @@ const userController = {
     try {
       const { name, email, password: reqPassword, pic } = req.body;
       const existUser = await User.findOne({ email });
+      console.log(existUser);
       if (existUser) {
         return res.status(404).json("User already exist");
       }
@@ -122,6 +123,16 @@ const userController = {
     refreshTokens.filter((token) => token != req.body.token);
     res.clearCookie("refreshToken");
     res.status(200).json("Logout successfully!");
+  },
+
+  getAllUsers: async (req, res) => {
+    try {
+      const users = await User.find({}, "-password");
+      res.status(200).json(users);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json("Error retrieving users");
+    }
   },
 };
 

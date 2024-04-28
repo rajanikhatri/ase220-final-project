@@ -10,6 +10,7 @@ const cityRoutes = require("../backend/routes/cityRoutes");
 const placeRoutes = require("../backend/routes/placeRoutes");
 const commentRoutes = require("../backend/routes/commentRoutes");
 const replyRoutes = require("../backend/routes/replyRoutes");
+const path = require("path");
 
 dotenv.config();
 connectDB();
@@ -20,28 +21,33 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.json());
 
+app.use(
+  cors({
+    origin: "http://localhost:8000", // Change to your frontend origin
+    methods: ["GET", "POST", "PUT", "DELETE"], // Allowable HTTP methods
+    allowedHeaders: ["Content-Type", "Authorization"], // Important to include 'Authorization'
+    credentials: true, // Allows sending cookies
+  })
+);
+
 //static routes
-app.use(express.static(path.join(__dirname, "frontend")));
+app.use(express.static(path.join(__dirname, "../frontend")));
 
 //web routes
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "frontend", "index.html"));
-});
-
 app.get("/countries", (req, res) => {
-  res.sendFile(path.join(__dirname, "frontend", "index.html"));
+  res.sendFile(path.join(__dirname, "../frontend/index.html"));
 });
 
-app.get("/cites", (req, res) => {
-  res.sendFile(path.join(__dirname, "frontend", "cities.html"));
+app.get("/countries/:countryId/cities", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/cities.html"));
 });
 
-app.get("/places", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "places.html"));
+app.get("/cities/:cityId/places", (req, res) => {
+  res.sendFile(path.join(__dirname, "places.html"));
 });
 
-app.get("/comments", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "comments.html"));
+app.get("/places/:placeId/comments", (req, res) => {
+  res.sendFile(path.join(__dirname, "frontend", "comments.html"));
 });
 //api routes
 app.use("/v1/user", userRoutes);
