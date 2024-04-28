@@ -10,7 +10,7 @@ router.post(
   countryController.createCountry
 );
 router.get("/", countryController.getAllCountries);
-router.get("/:id", countryController.getCountryById);
+// router.get("/:id", countryController.getCountryById);
 router.put(
   "/:id",
   middlewareController.verifyToken,

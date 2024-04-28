@@ -7,6 +7,7 @@ const cors = require("cors");
 const userRoutes = require("../backend/routes/userRoutes");
 const countryRoutes = require("../backend/routes/countryRoutes");
 const cityRoutes = require("../backend/routes/cityRoutes");
+const placeRoutes = require("../backend/routes/placeRoutes");
 
 dotenv.config();
 connectDB();
@@ -18,8 +19,24 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 
 app.use("/v1/user", userRoutes);
-app.use("/v1/country", countryRoutes);
-app.use("/v1/city", cityRoutes);
+app.use("/v1/countries", countryRoutes);
+app.use(
+  "/v1/countries/:countryId/cities",
+  (req, res, next) => {
+    req.countryId = req.params.countryId;
+    next();
+  },
+  cityRoutes
+);
+
+app.use(
+  "/v1/cities/:cityId/places",
+  (req, res, next) => {
+    req.cityId = req.params.cityId;
+    next();
+  },
+  placeRoutes
+);
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, console.log(`Server started on PORT ${PORT}`));

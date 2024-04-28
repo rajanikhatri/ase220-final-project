@@ -35,11 +35,11 @@ const placeSchema = mongoose.Schema(
       ref: "City",
       required: true,
     },
-    country: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Country",
-      required: false, //optional
-    },
+    // country: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "Country",
+    //   required: false, //optional
+    // },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",

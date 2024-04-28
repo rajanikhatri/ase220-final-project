@@ -45,7 +45,12 @@ const cityController = {
   getCitiesByCountry: async (req, res) => {
     try {
       const { countryId } = req.params;
+      console.log(countryId);
       const cities = await City.find({ country: countryId });
+      if (!cities || cities.length === 0) {
+        return res.status(404).json("no cites found for this country");
+      }
+      console.log(cities);
       res.status(200).json(cities);
     } catch (err) {
       console.log(err);
