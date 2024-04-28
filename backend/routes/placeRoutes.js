@@ -4,30 +4,30 @@ const middlewareController = require("../controllers/middlewareController");
 
 const router = express.Router();
 
-const setCityIdContext = (req, res, next) => {
+const setCityIdParam = (req, res, next) => {
   req.params.cityId = req.cityId;
   next();
 };
 
-router.get("/", setCityIdContext, placeController.getPlacesByCity);
+router.get("/", setCityIdParam, placeController.getPlacesByCity);
 router.post(
   "/",
   middlewareController.verifyToken,
-  setCityIdContext,
+  setCityIdParam,
   placeController.createPlace
 );
 router.put(
   "/:placeId",
   middlewareController.verifyToken,
-  setCityIdContext,
+  setCityIdParam,
   placeController.updatePlace
 );
 router.delete(
   "/:placeId",
   middlewareController.verifyToken,
-  setCityIdContext,
+  setCityIdParam,
   placeController.deletePlace
 );
-router.get("/:placeId", setCityIdContext, placeController.getPlaceById);
+router.get("/:placeId", setCityIdParam, placeController.getPlaceById);
 
 module.exports = router;
