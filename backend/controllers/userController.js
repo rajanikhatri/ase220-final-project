@@ -29,7 +29,6 @@ const userController = {
     try {
       const { name, email, password: reqPassword, pic } = req.body;
       const existUser = await User.findOne({ email });
-      console.log(existUser);
       if (existUser) {
         return res.status(404).json("User already exist");
       }

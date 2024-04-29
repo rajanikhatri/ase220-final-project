@@ -1,0 +1,227 @@
+body {
+  font-family: Mukta;
+}
+.card.h-100 {
+  border: none;
+  box-shadow: none;
+  background: transparent;
+}
+.card-text {
+  font-weight: 400;
+  font-style: normal;
+  opacity: 0.6;
+}
+/* This works for all the buttons with class btn*/
+.btn {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 11px;
+  transition: 0.6s;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  transition: 0.6s;
+}
+.carousel-item img:hover {
+  transform: scale(1.05);
+}
+.learn-more {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  outline: none;
+  border: 0;
+  vertical-align: middle;
+  text-decoration: none;
+  background: transparent;
+  padding: 0;
+  font-size: inherit;
+  font-family: inherit;
+}
+
+button.learn-more {
+  width: 12rem;
+  height: auto;
+}
+
+button.learn-more .circle {
+  position: relative;
+  display: block;
+  margin: 0;
+  width: 3rem;
+  height: 3rem;
+  background: #000;
+  border-radius: 1.625rem;
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+}
+
+button.learn-more .circle .icon {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  background: #fff;
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+}
+
+button.learn-more .circle .icon.arrow {
+  left: 0.625rem;
+  width: 1.125rem;
+  height: 0.125rem;
+  background: none;
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+}
+
+button.learn-more .circle .icon.arrow::before {
+  position: absolute;
+  content: "";
+  top: -0.25rem;
+  right: 0.0625rem;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-top: 0.125rem solid #fff;
+  border-right: 0.125rem solid #fff;
+  transform: rotate(45deg);
+}
+
+button.learn-more .button-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0.75rem 0;
+  margin: 0 0 0 1.85rem;
+  color: #000;
+  font-weight: 700;
+  line-height: 1.6;
+  text-align: center;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+}
+
+button:hover .circle {
+  width: 100%;
+}
+
+button:hover .circle .icon.arrow {
+  background: #fff;
+  transform: translate(1rem, 0);
+}
+
+button:hover .button-text {
+  color: #fff;
+}
+
+#mylink {
+  grid-area: main;
+  align-self: center;
+  justify-self: center;
+}
+.contacts {
+  margin-top: 70px;
+  height: 50px;
+  position: relative;
+  bottom: 20;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+.ul {
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.ul .li {
+  list-style: none;
+}
+
+.ul .li .a {
+  width: 80px;
+  height: 80px;
+  background-color: #fff;
+  text-align: center;
+  line-height: 80px;
+  font-size: 35px;
+  margin: 0 10px;
+  display: block;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  border: 3px solid #fff;
+  z-index: 1;
+}
+
+.ul .li .a .icon {
+  position: relative;
+  color: #262626;
+  transition: 0.5s;
+  z-index: 3;
+  margin-top: 16px;
+}
+
+.ul .li .a:hover .icon {
+  color: #fff;
+  transform: rotateY(360deg);
+}
+
+.ul .li .a:before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #f00;
+  transition: 0.5s;
+  z-index: 2;
+}
+
+.ul .li .a:hover:before {
+  top: 0;
+}
+
+.ul .li:nth-child(1) a:before {
+  background: #3b5999;
+}
+
+.ul .li:nth-child(2) a:before {
+  background: #55acee;
+}
+
+.ul .li:nth-child(3) a:before {
+  background: #0077b5;
+}
+
+.ul .li:nth-child(4) a:before {
+  background: #dd4b39;
+}
+#countries {
+  max-height: 100px;
+  overflow-y: auto;
+}
+
+#favorite-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+#favorite-btn .bi-heart-fill {
+  color: whitesmoke;
+  font-size: 20px;
+}

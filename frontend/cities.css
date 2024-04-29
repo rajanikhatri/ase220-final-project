@@ -1,7 +1,10 @@
+body {
+  font-family: Mukta;
+}
 .card.h-100 {
-  border: none; /* Removes the border */
-  box-shadow: none; /* Removes the shadow */
-  background: transparent; /* Makes the background transparent */
+  border: none;
+  box-shadow: none;
+  background: transparent;
 }
 .list-unstyled {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; /* This is a common font stack in Bootstrap */
@@ -17,10 +20,14 @@
   transition: 0.6s;
 }
 .card-img-top {
-  width: 100%; /* Full width */
-  height: 400px; /*  height */
-  object-fit: cover; /* This will cover the height of the carousel without stretching the image */
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
   transition: 0.6s;
+}
+.card-img-top:hover {
+  transform: scale(1.03);
+  filter: brightness(70%);
 }
 /* Position the heart button in the top-right corner */
 .heart-button {
@@ -68,4 +75,83 @@
   font-size: 16px;
   border-radius: 4px;
   transition: 0.6s;
+}
+
+#scroll-to-top-button {
+  position: fixed;
+  bottom: 30px;
+  right: 15px;
+  display: none;
+  background-color: transparent;
+  z-index: 9999;
+  border: none;
+}
+.hidden-section {
+  display: none;
+  color: black;
+  border-color: grey;
+  border-style: solid;
+  border-width: 1px;
+  background-color: ghostwhite;
+  position: absolute;
+  top: 63%;
+  right: -7%;
+  width: 10rem;
+  height: 10rem;
+  z-index: 9999;
+  animation: slideInFromBottom 0.6s ease-in-out forwards;
+  transition: 0.6s;
+  border-radius: 2%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+.hidden-section::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: calc(50% - 10px);
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid black;
+}
+
+@keyframes slideInFromBottom {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.card-body {
+  text-align: center;
+}
+#id {
+  display: none;
+}
+#btn-delete {
+  display: none;
+}
+#btn-edit {
+  display: none;
+}
+#btn-add {
+  display: none;
+}
+.review {
+  font-size: 16px;
+  transition: font-size 0.57s ease;
+  text-decoration: none;
+  color: black;
+}
+.review:hover {
+  font-size: 20px;
+}
+.review:hover i {
+  transform: scale(1.2);
+}
+.bi {
+  vertical-align: middle;
+  transition: transform 0.57s ease;
 }
