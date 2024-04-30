@@ -12,80 +12,89 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
     />
-    <link rel="stylesheet" href="cities.css">
+    <link rel="stylesheet" href="/cities.css">
+    <link rel="stylesheet" href="/places.css">
     <title>Popular Cities</title>
   </head>
   <body>
     <div class="makeItFixed">
-        <nav
-          class="nav-bar bg-black text-white p-2 d-flex "
-          style="--bs-bg-opaCountry: 0.5"
-        >
-         <div class="container-fluid" id="">
-         <a class="navbar-brand fs-2 fw-semibold" href="#">Cities <span id="countrycountry_name"></span></a>
-         </div>
-         <div class="auth-container d-flex gap-5 align-items-center w-25"></div>
-       </nav>
-
-      <div
-        class="d-flex justify-content-center mt-4 fw-semibold fs-2 pt-3 "
-      >
-      Popular Cities 
-      </div>
-    </div> 
-    <div class="d-flex justify-content-center ">
+      <nav class="navbar nav-pills justify-content-around bg-light ">
+        <a class=" navbar-brand fs-2 fw-semibold " href="#">Popular Cities<span id="countrycountry_name"></span></a>
+          <form class="d-flex " style = "width: 400px;" role="search">  
+            <select class="form-control me-1 " id="cities"> 
+              <option value="">Select A City</option>
+            </select>     
+          <button class="btn btn-outline-dark" type="submit" id = "search-city">
+            <i class="bi bi-search"></i> 
+          </button>
+          </form>
+          <div class="auth-container d-flex gap-4 align-items-center w-20"></div>
+        </nav> 
+    </div>
+    <div class="d-flex justify-content-center">
       <div class="container text-cente m-5">
-        <div class = "container text-end m-3">
-            <nav class="navbar bg-body-tertiary sticky-top">
-                <div class="container-fluid">
-                  <form class="d-flex" role="search">
-                    <input id="citySearchInput" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn bg-black text-white" type="submit">
-                        <i class="fas fa-search"></i> 
-                    </button>
-                  </form>
-                  <div class="text-end">
-                    <a data-bs-toggle="modal" data-bs-target="#add_modal" class="btn bg-black text-white me-2" id="btn-add">Add City</a>
-                  </div>
-                </div>
-              </nav>
-              
+        <div class = "container text-end m-3"> 
+          <div class="mt-4">
+            <div class="row">
+              <div class="col">
+                <a data-bs-toggle="modal" data-bs-target="#add_modal" class="btn btn-dark" id="btn-add">
+                  <i class="bi bi-plus-circle"></i>
+                </a>
+              </div>
+            </div>
+            <div class="row mt-2">
+            </div>
+          </div> 
         <div
-          id="pets-container"
+          id="cities-container"
           class="row row-cols-1 row-cols-sm-2 row-cols-lg-3"
-        ></div>
+        >
+      </div>
 
         <!-- PAGINATION -------------------------------------------------------------------->
         <div id="actions" class="d-flex justify-content-center my-4"></div>
       </div>
-
+      <!--Contacts-->
+      <section class = "contacts" style = "height: 50px;position:relative;bottom: 20; width: 100%;justify-content: center; align-items: center;">
+        <ul class= "ul">
+          <li class ="li">
+            <a class = "a" href="#">
+              <i class="fab fa-facebook-f icon"></i> </a>
+          </li>
+          <li class = "li">
+            <a  class = "a" href="#">
+              <i class="fab fa-twitter icon"></i></a>
+          </li>
+          <li class = "li" >
+            <a class = "a" href="#"><i class="fab fa-linkedin-in icon"></i></a></li>
+          <li class = "li">
+            <a class = "a" href="#"><i class="fab fa-google-plus-g icon"></i></a></li>
+        </ul>
+      </section>
        <!-- Login --------------------------------------------------------------->
-      <div class="modal fade" id="login_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+       <div class="modal fade" id="login_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
+        <div class="modal-dialog modal-dialog-centered" style = "max-width: 400px;">
           <div class="modal-content">
             <div class="modal-header">
-              <h1 class="modal-title fs-5" id="staticBackdropLabel">
-                <div class="d-flex">
-                  <h5>Log in</h5>
-                </div>
-              </h1>
+              <h2 class="modal-title fs-5 " id="staticBackdropLabel" style = "position: relative; left: 45%;">
+                <b>Login</b>
+              </h2>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
               <form class="row g-3">
                 <div class="col-12">
-                  <label for="loginEmail" class="form-label">Email address</label>
-                  <input type="email" class="form-control" id="loginEmail" required>
+                  <input type="email" class="form-control" id="loginEmail" required placeholder="Email">
                 </div>
-                <div class="col-12">
-                  <label for="loginPassword" class="form-label">Password</label>
-                  <input type="password" class="form-control" id="loginPassword" required>
+                <div class="col-12 ">
+                  <input type="password" class="form-control" id="loginPassword" required placeholder="Password">
+                </div>  
+                <div class="col-12 text-center">
+                  <button class="btn btn-secondary login-submit-btn" type="submit" >Submit</button>
+                  <p>Don't have an account yet?</p>
+                  <button type="button" class="btn btn-secondary signup-btn" id="signup-btn" data-bs-dismiss="modal"> Sign up</button>
                 </div>
-                
-                <div class="col-12">
-                  <button class="btn btn-primary" type="submit">Login</button>
-                  <button type="button" class="btn btn-secondary signup-btn" id="signup-btn" data-bs-dismiss="modal">Don't have an account yet? Sign up</button>
-                </div>
+                <div class="loginError"></div>
               </form>
             </div>
             <div class="modal-footer">
@@ -93,50 +102,44 @@
             </div>
           </div>
         </div>
+    </div>
+    
+    
+ <!-- Signup--------------------------------------------------------------->
+ <div class="modal fade" id="signup_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
+  <div class="modal-dialog modal-dialog-centered" style = "max-width: 400px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title fs-5 " id="staticBackdropLabel" style = "position: relative; left: 45%;">
+          <b>Signup</b>
+        </h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-
-
-      <!-- Signup--------------------------------------------------------------->
-      <div class="modal fade" id="signup_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="staticBackdropLabel">
-                <div class="d-flex">
-                  <h5>Sign Up</h5>
-                </div>
-              </h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <form class="row g-3">
-                <div class="col-12">
-                  <label for="signupUsername" class="form-label">Your name</label>
-                  <input type="text" class="form-control" id="signupUsername" required>
-                </div>
-                <div class="col-12">
-                  <label for="signupEmail" class="form-label">Email address</label>
-                  <input type="email" class="form-control" id="signupEmail" required>
-                </div>
-                <div class="col-12">
-                  <label for="signupPassword" class="form-label">Password</label>
-                  <input type="password" class="form-control" id="signupPassword" required>
-                </div>
-                
-                <div class="col-12">
-                  <button class="btn btn-primary signup-submit-btn" type="submit">Sign Up</button>
-                  <button type="button" class="btn btn-secondary login-btn" id="login-btn" data-bs-dismiss="modal">Already have an account? Login</button>
-                </div>
-                <div class="signupError"></div>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
-            </div>
+      <div class="modal-body">
+        <form class="row g-3">
+          <div class="col-12">
+            <input type="email" class="form-control" id="userName" required placeholder="Username">
           </div>
-        </div>
+          <div class="col-12">
+            <input type="email" class="form-control" id="siginEmail" required placeholder="Email">
+          </div>
+          <div class="col-12 ">
+            <input type="password" class="form-control" id="siginPassword" required placeholder="Password">
+          </div>
+          <div class="col-12 text-center">
+            <button class="btn btn-secondary login-submit-btn" type="submit" >Submit</button>
+            <p>Already have an account?</p>
+            <button type="button" class="btn btn-secondary login-btn" id="login-btn" data-bs-dismiss="modal">Login</button>
+          </div>
+          <div class="loginError"></div>
+        </form>
       </div>
-
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
       <!--UPDATE MODAL ------------------------------------------------------->
       <div
         class="modal fade"
@@ -167,22 +170,18 @@
                     <label for="inputName" class="form-label">Name</label>
                     <input type="text" class="form-control" id="inputName"/>
                   </div>
-
                   <div class="mb-3">
                     <label for="inputDestination" class="form-label">Tourist Destinations</label>
                     <input type="text" class="form-control" id="inputDestination" />
                   </div>
-
                   <div class="mb-3">
                     <label for="inputVisit" class="form-label">Best Time to Visit</label>
                     <input type="text" class="form-control" id="inputVisit" />
                   </div>
-
                   <div class="mb-3">
                     <label for="inputRating" class="form-label">Ratings</label>
                     <input type="text" class="form-control" id="inputRating" />
                   </div>
-
                   <div class="mb-3 d-flex gap-2">
                     <label for="inputTemperature" class="col-form-label">Average Temperature:</label>
                     <div class="d-flex align-items-center gap-4">
@@ -208,7 +207,6 @@
                       </div>
                     </div>
                   </div>
-
                   <div class="mb-3">
                     <label for="inputDescription" class="form-label"
                       >Description</label
@@ -230,7 +228,6 @@
           </div>
         </div>
       </div>
-
       <!--Add Modal-->
       <div
       class="modal fade"
@@ -241,7 +238,7 @@
       aria-labelledby="staticBackdropLabel"
       aria-hidden="true"
     >
-      <div class="modal-dialog">
+     <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <h1 class="modal-title fs-5" id="staticBackdropLabel">
@@ -258,29 +255,25 @@
             <div class="card-body d-flex flex-column">
                 <form>
                   <div class="mb-3">
-                    <label for="inputImage" class="form-label">Country Image URL</label>
-                    <input type="text" class="form-control" id="inputImageAdd" />
+                    <label for="cityImageAdd" class="form-label">Country Image URL</label>
+                    <input type="text" class="form-control" id="cityImageAdd" />
                   </div>
                     <div class="mb-3">
                       <label for="inputName" class="form-label">Name</label>
                       <input type="text" class="form-control" id="inputNameAdd"/>
                     </div>
-  
-                    <div class="mb-3">
+                     <div class="mb-3">
                       <label for="inputDestination" class="form-label">Tourist Destinations</label>
                       <input type="text" class="form-control" id="inputDestinationAdd" />
                     </div>
-  
                     <div class="mb-3">
                       <label for="inputVisit" class="form-label">Best Time to Visit</label>
                       <input type="text" class="form-control" id="inputVisitAdd" />
                     </div>
-  
                     <div class="mb-3">
                       <label for="inputRating" class="form-label">Ratings</label>
                       <input type="text" class="form-control" id="inputRatingAdd" />
                     </div>
-  
                     <div class="mb-3 d-flex gap-2">
                       <label for="inputTemperature" class="col-form-label">Average Temperature:</label>
                       <div class="d-flex align-items-center gap-4">
@@ -306,7 +299,6 @@
                         </div>
                       </div>
                     </div>
-              
                     <div class="mb-3">
                       <label for="inputDescriptionAdd" class="form-label"
                         >Description</label
@@ -318,7 +310,6 @@
                       ></textarea>
                     </div>
                   </form>
-
             </div>
           </div>
           <div class="modal-footer">
@@ -330,7 +321,6 @@
       </div>
     </div>
     </div>
-
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
@@ -345,453 +335,490 @@
       src="https://code.jquery.com/jquery-3.7.1.min.js"
       integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
       crossorigin="anonymous"
-    ></script>
+    >
+  </script>
     <script src="https://kit.fontawesome.com/118e30abce.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
      <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
     <script>
-        let Cities = [];
-        let countries = []
-        let country = "";
-        var offset = 0;
-        var rpp = 9;
-        var pages = 0;
-        var editingCityId = -1;
-        var addingCityId = -1;
-        const userApiUrl = "https://jsonblob.com/api/1213602404489879552";
-        let users = []
-        const id = 'c7f6d4c3-d9de-4b19-8a5d-c4cc6c3eae81'
-        const url = 'http://localhost:8000'
-        axios
-          .get(userApiUrl, {})
-          .then(function (res) {
-            users = res.data;
-          })
-          .catch(function (err) {
-            console.log(err);
-          });
+      let Cities = [];
+      let countries = []
+      let country = "";
+      var offset = 0;
+      var rpp = 9;
+      var pages = 0;
+      var editingCityId = -1;
+      var addingCityId = -1 
+      let users = []
+
+      const path = window.location.pathname; 
+        const pathParts = path.split('/')
+        const countryId = pathParts[2]
     
-        function getQueryParam(key) {
-          let queryParams = new URLSearchParams(window.location.search);
-          return queryParams.has(key) ? queryParams.get(key) : null;
-        }
+       axios
+        .get('http://localhost:8000/v1/user/all', {})
+        .then(function (res) {
+          users = res.data;
+          console.log(users)
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
 
-        function findCitiesByCountry(countryName){
-          let foundCities = [];
-          // console.log(typeof(countries.content))
-          // console.log(countries.content)
-          countries.forEach(country=>{
-            if(country.country.toLowerCase() === countryName.toLowerCase()){
-              foundCities = country.cities
-            }
-          })
-          return foundCities
-        }
+        axios
+          .get(`http://localhost:8000/v1/countries/${countryId}/cities`, {})
+          .then(function(res){
+              cities = res.data
+              console.log(cities)
+              displayCards(cities);
+              displayPageBasedPagination(cities);
+            }).catch(function(err){
+              console.log(err)
+            })
 
-        $(document).ready(function(){
-          $.getJSON(`${url}/api/blobs/${id}`, function(data ) {
-            countries = data.content;
-            country = getQueryParam("country");
-            Cities = findCitiesByCountry(country);
-            console.log(Cities)
-            //PAGE BASED PAGINATION
-            displayCards(Cities);
-            displayPageBasedPagination(Cities);
-            function displayPageBasedPagination(Cities) {
-              rpp = 9;
-              pages = Math.ceil(Cities.length / rpp);
-              document.querySelector("#actions").innerHTML = "";
-              for (let i = 0; i < pages; i++) {
-                let loadMoreButton = document.createElement("button");
-                loadMoreButton.setAttribute("data-page", i + 1);
-                loadMoreButton.classList.add("btn");
-                loadMoreButton.classList.add("page-btn");
+          function displayPageBasedPagination(Cities) {
+            rpp = 9;
+            pages = Math.ceil(Cities.length / rpp);
+            document.querySelector("#actions").innerHTML = "";
+            for (let i = 0; i < pages; i++) {
+              let loadMoreButton = document.createElement("button");
+              loadMoreButton.setAttribute("data-page", i + 1);
+              loadMoreButton.classList.add("btn");
+              loadMoreButton.classList.add("page-btn");
 
-                if (i * rpp === offset) {
-                  loadMoreButton.classList.add("btn-success");
-                  loadMoreButton.classList.add("disabled");
-                } else {
-                  loadMoreButton.classList.add("btn-outline-success");
-                }
-                loadMoreButton.classList.add("m-1");
-                loadMoreButton.innerText = i + 1;
-                loadMoreButton.addEventListener("click", function (e) {
-                  let buttons = document.querySelectorAll(".page-btn");
-                  for (let i = 0; i < buttons.length; i++) {
-                    buttons[i].classList.remove("disabled");
-                    buttons[i].classList.remove("btn-success");
-                    buttons[i].classList.add("btn-outline-success");
-                  }
-                  offset = i * rpp;
-                  e.target.classList.remove("btn-outline-success");
-                  e.target.classList.add("btn-success");
-                  e.target.classList.add("disabled");
-                  document.getElementById("pets-container").innerHTML = "";
-                  displayCards(Cities);
-                });
-                document.querySelector("#actions").append(loadMoreButton);
+              if (i * rpp === offset) {
+                loadMoreButton.classList.add("btn-dark");
+                loadMoreButton.classList.add("disabled");
+              } else {
+                loadMoreButton.classList.add("btn-outline-dark");
               }
+              loadMoreButton.classList.add("m-1");
+              loadMoreButton.innerText = i + 1;
+              loadMoreButton.addEventListener("click", function (e) {
+                let buttons = document.querySelectorAll(".page-btn");
+                for (let i = 0; i < buttons.length; i++) {
+                  buttons[i].classList.remove("disabled");
+                  buttons[i].classList.remove("btn-success");
+                  buttons[i].classList.add("btn-outline-dark");
+                }
+                offset = i * rpp;
+                e.target.classList.remove("btn-outline-dark");
+                e.target.classList.add("btn-dark");
+                e.target.classList.add("disabled");
+                document.getElementById("cities-container").innerHTML = "";
+                displayCards(Cities);
+              });
+              document.querySelector("#actions").append(loadMoreButton);
             }
-           
-            function generateCard(City) {
-              const cardHTML = `
-                <div class="col cards my-2" id = ${City.cityId}>
-                    <span class="card h-100 ">
-                      <div class="position-relative">
-                          <div id="carouselExample${City.cityId}" class="carousel slide">
-                            <div class="carousel-inner rounded">
-                                <div class="carousel-item active">
-                                    <img src="${City.avatar[0]}" class="d-block w-100"  alt="image of ${City.city}">
-                                  </div>
-                                <div class="carousel-item">
-                                  <img src="${City.avatar[1]}" class="d-block w-100"   alt="image of ${City.city}">
-                                  </div>
-                              </div>
-                              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample${City.cityId}" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
-                              </button>
-              
-                              <button class="carousel-control-next" type="button" data-bs-target="#carouselExample${City.cityId}" data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
-                              </button>
-                          </div>                                                   
-                      </div>
-
-                      <div class="card-body d-flex flex-column" style="text-align: left;">
-                        <div class="d-flex justify-content-between">
-                        <div class="d-flex"> <h5  class="card-title fw-bold " style="font-size: 24px;">${City.city}</h5>
-                      </div>
-                      <div>
-                          <i class="fa-solid fa-star " ></i> ${City.ratings}
-                          </div>
+          }
+          function generateCard(City) {
+             const cardHTML = `
+              <div class="col cards my-2" id = ${City._id}>
+                  <span class="card h-100 ">
+                    <div class="position-relative">
+                        <div id="carouselExample${City._id}" class="carousel slide">
+                           <div class="carousel-inner rounded">
+                              <div class="carousel-item active">
+                                  <img src="${City.avatar[0]}" class="d-block w-100"  alt="image of ${City.city}">
+                                </div>
+                              <div class="carousel-item">
+                                 <img src="${City.avatar[1]}" class="d-block w-100"   alt="image of ${City.city}">
+                                </div>  
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample${City._id}" data-bs-slide="prev">
+                              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                              <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample${City._id}" data-bs-slide="next">
+                              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                              <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>                                                   
+                    </div>
+                    <div class="card-body d-flex flex-column" style="text-align: left;">
+                      <div class="d-flex justify-content-between">
+                      <div class="d-flex"> <h5  class="card-title fw-bold " style="font-size: 24px;">${City.city}</h5>
+                    </div>
+                       <div class = "generate-hidden">
+                        <i class="fa-solid fa-star " ></i> ${City.ratings}
+                       </div>
+                       <div class="hidden-section">
+                        <div class="card-body">
+                          <h5 class="card-title"> ${City.ratings} out of 5</h5>
+                          <p>50 global ratings</p>
                         </div>
-                        
-                        <ul class="list-unstyled">
-                          <li>${City.high} // L: ${City.low}
-                          </li>
-                          <li><em>Destination:</em> ${City.destinations}</li>
-                          <li><em>Ideal Season for Travel:</em> ${City.best_time_to_visit}</li>
-                          <li id="id">ID: ${City.cityId}</li>
-                        </ul>
+                        <div class="card-body">
+                            <a href = "#" class = "review">Review</a>
+                            <i class="bi bi-arrow-up-right-circle"></i>
+                        </div>
+                      </div> 
                       </div>
-                      <div class="d-flex justify-content-end gap-2 m-3">
-                      <a class="btn bg-black text-white" href="popularplaces.html?country=${country}&city=${City.city}">
-                          More details
-                        </a>
+                      <ul class="list-unstyled">
+                        <li>${City.high} // L: ${City.low}
+                        </li>
+                        <li>Destination: ${City.destinations}</li>
+                        <li>Ideal Season for Travel:${City.best_time_to_visit}</li>
+                      </ul>
+                     </div>
+                     <div class="d-flex justify-content-center gap-2 m-3">
+                      <a href="cities.html">
+                      <button class="learn-more">
+                        <span class="circle" aria-hidden="true">
+                          <span class="icon arrow"></span>
+                        </span>
+                        <a class="button-text" href="/cities/${City._id}/places" >Explore</a>
+                      </button>
+                      </a>
                         <a data-bs-toggle="modal" data-bs-target="#update_modal"
-                        class="btn bg-black text-white" id="btn-edit">
+                        class="btn btn-dark" id="btn-edit">
                         <i class="bi bi-pencil-square"></i></a>
                         <a
-                        class="btn deleteBtn btn-dark d-flex align-items-center">
+                        class="btn btn-dark" id = "btn-delete">
                         <i class="bi bi-trash3-fill"></i></a>
-                      </div>
-                    </span>
-                </div>`;
-              return cardHTML;
-            }
+                    </div>
+                  </span>
+              </div>`;
+            return cardHTML;
+          }
 
-            function displayCards(Cities) {
-              for (let i = offset; i < Math.min(offset + rpp, Cities.length); i++) {
-                document.getElementById("pets-container").innerHTML += generateCard(
-                  Cities[i]
-                );
-              }
-            }
-            //Populate the update model when update button is clicked handled later.
-            function populateUpdateModal(City) {
-              console.log(City)
-              document.getElementById("inputName").value = City.city;
-              document.getElementById("inputDestination").value = City.destinations;
-              document.getElementById("inputVisit").value = City.best_time_to_visit;
-              document.getElementById("inputRating").value = City.ratings;
-              document.getElementById("High").value = City.high;
-              document.getElementById("Low").value = City.low;
-              document.getElementById("inputDescription").value = City.description;
-            }
-            function getCitiesById(id) {
-              id = parseInt(id)
-              return Cities.find((city) => city.cityId === id);//return the pet whose id is passed as parameter
-            }
-            function checkUserInLocalStorage(){
-              const user = localStorage.getItem('user')
-              const navbar = $('.nav-bar')
-              const authContainer = navbar.find('.auth-container')
-              if(user){
-                const username = JSON.parse(user).name;
-                authContainer.html(`
-                <div>Hi, ${username}</div>
-                <button id="logoutBtn">Logout</button>
-                `)
-              }else{
-                authContainer.html(`
-                <button  data-bs-toggle="modal" data-bs-target="#login_modal"  id="loginBtn">Login</button>
-                <button  data-bs-toggle="modal" data-bs-target="#signup_modal"  id="signupBtn">Sign Up</button>
-                `)
-              }
-            }
-            function loginUser(email, password) {
-              const foundUser = users.find(
-              (user) => user.email === email && user.password === password
+          function displayCards(Cities) {
+            for (let i = offset; i < Math.min(offset + rpp, Cities.length); i++) {
+              document.getElementById("cities-container").innerHTML += generateCard(
+                Cities[i]
               );
-              console.log(foundUser)
-              if (foundUser) {
-              const { userId, name, email } = foundUser; // Destructure user properties
-              console.log("login");
-              const user = {
-                  userId: userId,
-                  name: name,
-                  email: email,
-              };
-              localStorage.setItem("user", JSON.stringify(user));
+            }
+          }
+
+          //Populate the update model when update button is clicked handled later.
+          function populateUpdateModal(City) {
+            console.log(City)
+            document.getElementById("inputName").value = City.city;
+            document.getElementById("inputDestination").value = City.destinations;
+            document.getElementById("inputVisit").value = City.best_time_to_visit;
+            document.getElementById("inputRating").value = City.ratings;
+            document.getElementById("High").value = City.high;
+            document.getElementById("Low").value = City.low;
+            document.getElementById("inputDescription").value = City.description;
+          }
+          function getCitiesById(id) {
+            id = parseInt(id)
+            return Cities.find((city) => city.cityId === id);//return the pet whose id is passed as parameter
+          }
+          function checkUserInLocalStorage(){
+          const user = localStorage.getItem('user')
+          const navbar = $('.navbar')
+          const authContainer = navbar.find('.auth-container')
+          if(user){
+            const username = JSON.parse(user).name;
+            authContainer.html(`
+            <div>Hi, ${username}</div>
+            <button class = "btn btn-dark"id="logoutBtn">Logout</button>
+            `)
+          }
+          else{
+            console.log("No logged in")
+            authContainer.html(`
+             <button class ="btn btn-dark" data-bs-toggle="modal" data-bs-target="#login_modal" id="loginBtn">Login</button>
+             <button class = "btn btn-dark" data-bs-toggle="modal" data-bs-target="#signup_modal" id="signupBtn">Sign Up</button>
+            `)
+          }
+        }
+          
+        function loginUser(email, password) {
+            const foundUser = users.find(
+            (user) => user.email === email && user.password === password
+            );
+            console.log(foundUser)
+            if (foundUser) {
+            const { userId, name, email } = foundUser; // Destructure user properties
+            console.log("login");
+            const user = {
+                userId: userId,
+                name: name,
+                email: email,
+            };
+            localStorage.setItem("user", JSON.stringify(user));
+            checkUserInLocalStorage();
+            $("#login_modal").modal("hide");
+            } else {
+            console.log("cant login");
+            $("#loginError").text("Email or password not found");
+            }
+        }
+
+         function signupUser(username, email, password){
+            const existingUser = users.find(user=> user.email === email);
+            if(existingUser){
+              $('#signupError').text('Email already exists. Please use a different email');
+              return;
+            }
+            const newUser = {
+              userId: users.length + 1,
+              name: username,
+              email: email,
+              password: password,
+            }
+            const newLocalUser = {
+              userId: users.length + 1,
+              name: username,
+              email: email,
+            }
+            console.log(newUser)
+            users.push(newUser);
+            axios.put(userApiUrl, users).then((res)=>{
+              console.log(res.data)
+            }).catch((err)=>{
+              console.log(err)
+            })
+            
+            localStorage.setItem('user', JSON.stringify(newLocalUser));
+            $("#signupError").text("");
+            checkUserInLocalStorage()
+            $("#signup_modal").modal("hide");
+          }
+
+          $(document).ready(function() {
               checkUserInLocalStorage();
-              $("#login_modal").modal("hide");
-              } else {
-              console.log("cant login");
-              $("#loginError").text("Email or password not found");
-              }
-            }
-
-            function signupUser(username, email, password){
-              const existingUser = users.find(user=> user.email === email);
-              if(existingUser){
-                $('#signupError').text('Email already exists. Please use a different email');
-                return;
-              }
-              const newUser = {
-                userId: users.length + 1,
-                name: username,
-                email: email,
-                password: password,
-              }
-              const newLocalUser = {
-                userId: users.length + 1,
-                name: username,
-                email: email,
-              }
-              console.log(newUser)
-              users.push(newUser);
-              axios.put(userApiUrl, users).then((res)=>{
-                console.log(res.data)
-              }).catch((err)=>{
-                console.log(err)
+              $(document).on('click', '#logoutBtn', function() {
+                localStorage.removeItem('user');
+                location.reload()
+              });
+              $('#login_modal form').submit(function(e){
+                e.preventDefault();
+                const email = $('#loginEmail').val();
+                const password = $('#loginPassword').val();
+                loginUser(email, password)
               })
-              localStorage.setItem('user', JSON.stringify(newLocalUser));
-              $("#signupError").text("");
-              checkUserInLocalStorage()
-              $("#signup_modal").modal("hide");
-            }
-
-            $(document).ready(function() {
-                checkUserInLocalStorage();
-                $(document).on('click', '#logoutBtn', function() {
-                  localStorage.removeItem('user');
-                  location.reload()
-                });
-                $('#login_modal form').submit(function(e){
-                  e.preventDefault();
-                  const email = $('#loginEmail').val();
-                  const password = $('#loginPassword').val();
-                  loginUser(email, password)
-                })
-                $('#signup_modal form').submit(function(e){
-                  e.preventDefault();
-                  const username = $('#signupUsername').val()
-                  const email = $('#signupEmail').val();
-                  const password = $('#signupPassword').val();
-                  console.log('signup')
-                  signupUser(username, email, password);
-                })
-                $(document).on("click", "#login-btn", function () {
-                  console.log('khanh')
-                  $("#signup_modal").modal("hide");
-                  $("#login_modal").modal("show");
-              });
-              $(document).on("click", "#signup-btn", function () {
-                  console.log('khanh1')
-                  $("#signup_modal").modal("show");
-                  $("#login_modal").modal("hide");
-              });
+              $('#signup_modal form').submit(function(e){
+                e.preventDefault();
+                const username = $('#signupUsername').val()
+                const email = $('#signupEmail').val();
+                const password = $('#signupPassword').val();
+                console.log('signup')
+                signupUser(username, email, password);
+              })
+               $(document).on("click", "#login-btn", function () {
+                console.log('khanh')
+                $("#signup_modal").modal("hide");
+                $("#login_modal").modal("show");
+            });
+            $(document).on("click", "#signup-btn", function () {
+                console.log('khanh1')
+                $("#signup_modal").modal("show");
+                $("#login_modal").modal("hide");
+            });
+            //handle the hidden card
+            $(document).on('mouseenter', '.generate-hidden', function() {
+                $(this).siblings('.hidden-section').css('display', 'block');
             });
 
-            $(() => {
-              $(document).on("click", "#btn-edit", function () {
-                editCityIdText = $(this)
-                  .parents()
-                  .parents()
-                  .eq(1)
-                  .find("div")
-                  .find("ul")
-                  .find("li[id]")
-                  .text();
-                editingCityId = editCityIdText.split(" ")[1];
-                const editingCity = getCitiesById(editingCityId);
-                if (editingCity) {
-                  populateUpdateModal(editingCity);
-                } else {
-                  console.error('City not found for ID:', editingCityId);
-                }
-              });
+            $(document).on('mouseleave', '.generate-hidden', function() {
+                $(this).siblings('.hidden-section').css('display', 'none');
+            });
 
-              //Delete 
-              $(document).on("click", ".deleteBtn", function () {
-                let parentDiv = $(this).parent().parent().parent();
-                let parentId = parentDiv.attr("id");Cities
-                const index = Cities.findIndex((City) => City.cityId === parseInt(parentId));
-                // console.log(index)
-                // console.log(countries)
-                // console.log(typeof countries)
-                const countryIdx = countries.findIndex((Country)=> Country.country === country);
-                if (index !== -1) {
-                  Cities.splice(index, 1);
-                  countries[countryIdx].cities = Cities
-                  $.ajax({
-                          type: "PUT",
-                          url: `${url}/api/blobs/${id}`,
-                          data: JSON.stringify(countries),
-                          contentType: "application/json; charset=utf-8",
-                          dataType: "json",
-                        success: function(xhr,data,response){
-                              axios
-                                .get(`${url}/api/blobs/${id}`, {})
-                                .then(function(res){
-                                    countries = res.data.content
-                                    displayCards(countries);
-                                    displayPageBasedPagination(countries);
-                                    
-                                  }).catch(function(err){
-                                    console.log(err)
-                                  })
-                          },
-                          error: function(errMsg) {
-                              alert(errMsg);
-                          }
-                        });
-                  $("#pets-container").empty();
-                  displayCards(Cities);
-                  displayPageBasedPagination(Cities);
-                }
-              });
-            
-              //update pet information when the edit form is submitted
-              $(document).on("click", "#edit-submit", function () {
-                const editingCity = getCitiesById(editingCityId);
-                var updatedCity = {
-                  cityId: editingCity.cityId,
-                  avatar: editingCity.avatar,
-                  city: $("#inputName").val() || editingCity.city,
-                  destinations: $("#inputDestination").val() || editingCity.destinations,
-                  best_time_to_visit: $("#inputVisit").val() || editingCity.best_time_to_visit,
-                  ratings: $("#inputRating").val() || editingCity.ratings,
-                  high: $("#High").val() || editingCity.high,
-                  low: $("#Low").val() || editingCity.low,
-                  description: $("#inputDescription").val() || editingCity.description,
-                  places: editingCity.places,
-                };
-                //update
-                const cityIdx = Cities.findIndex((City)=> City.cityId === parseInt(editingCityId))
-                Cities[cityIdx] = updatedCity;
-                const idx = countries.findIndex((Country)=> Country.country === country)
-                if (idx !== -1) {
-                  countries[idx].cities = Cities;
-                  $("#pets-container").empty();
-                  displayCards(Cities);
-                }
-                $("#update_modal").modal("hide");
-                $.ajax({
-                          type: "PUT",
-                          url: `${url}/api/blobs/${id}`,
-                          data: JSON.stringify(countries),
-                          contentType: "application/json; charset=utf-8",
-                          dataType: "json",
-                          success: function(xhr,data,response){
-                              axios
-                                .get(`${url}/api/blobs/${id}`, {})
-                                .then(function(res){
-                                    countries = res.data.content
-                                    displayCards(countries);
-                                    displayPageBasedPagination(countries);
-                                    
-                                  }).catch(function(err){
-                                    console.log(err)
-                                  })
-                          },
-                          error: function(errMsg) {
-                              alert(errMsg);
-                          }
-                        });
-              });
+            $(document).on('mouseenter', '.hidden-section', function() {
+                $(this).css('display', 'block');
+            });
 
-              function generateCityId() {
-                  return new Date().getTime();
-              }
-
-              //Add
-              $(document).on("click", "#add-submit", function () {
-                var addingCity = {
-                  cityId: generateCityId(),
-                  avatar: [$("#inputImageAdd").val()],
-                  city: $("#inputNameAdd").val(),
-                  destinations: $("#inputDestinationAdd").val(),
-                  best_time_to_visit: $("#inputVisitAdd").val(),
-                  ratings: $("#inputRatingAdd").val(),
-                  high: $("#HighAdd").val(),
-                  low: $("#LowAdd").val(),
-                  description: $("#inputDescriptionAdd").val(),
-                  places: []
-                };
-            
-                Cities.unshift(addingCity);
-                const idx = countries.findIndex((Country)=> Country.country === country)
-                if (idx !== -1) {
-                  countries[idx].cities = Cities;
-                  $("#pets-container").empty();
-                  displayCards(Cities);
-                  displayPageBasedPagination(Cities);
-                }
-                $("#add_modal").modal("hide");
-                $.ajax({
-                  type: "PUT",
-                  url: `${url}/api/blobs/${id}`,
-                  data: JSON.stringify(countries),
-                  contentType: "application/json; charset=utf-8",
-                  dataType: "json",
-                  success: function(xhr,data,response){
-                        axios
-                            .get(`${url}/api/blobs/${id}`, {})
-                            .then(function(res){
-                                countries = res.data.content
-                                displayCards(countries);
-                                displayPageBasedPagination(countries);
-                                
-                              }).catch(function(err){
-                                console.log(err)
-                              })
-                  },
-                  error: function(errMsg) {
-                      alert(errMsg);
-                  }
-                        });
-              });
-          });
+            $(document).on('mouseleave', '.hidden-section', function() {
+                $(this).css('display', 'none');
+            });
         });
-      });
 
-      document.addEventListener('DOMContentLoaded', function() {
-        const searchInput = document.getElementById('citySearchInput'); 
-        const citiesArray = []; 
-        searchInput.addEventListener('input', function() {
-          const searchValue = searchInput.value.trim().toLowerCase(); 
-          citiesArray.length = 0; 
-          for (let i = 0; i < Cities.length; i++) {
-            if (Cities[i].name.toLowerCase().includes(searchValue)) {
-              citiesArray.push(Cities[i].name); 
-            }
-          }        
-      });
-    });
-    </script>
+
+      // listen to event when click on  INFORMATION icon (vanilla js)
+          // document
+          //   .getElementById("info_modal")
+          //   .addEventListener("show.bs.modal", function (event) {
+          //     const modalDoc = event?.relatedTarget;
+          //     const id =
+          //       modalDoc?.parentNode?.parentNode?.querySelector('ul li[id="id"]');
+          //     const City = getCitiesById(id?.innerText.split(" ")[1]);
+          //     populateInfoModal(City);
+          //   });
+          
+  
+
+          $(() => {
+            //handle the search button
+            $("#search-city").click(function(event) {
+              event.preventDefault();
+              var cityDisplay = [];
+              var selectedCity = $("#cities").val();
+              console.log(selectedCity);
+              if (selectedCity === "") {
+                  alert("Please select a city.");
+              }
+              $.each(Cities, function(index, value) {
+                  if (value.city === selectedCity) {
+                      cityDisplay.push(value);
+                      return false; // Stop searching after finding the first match
+                  }
+              });
+              console.log(cityDisplay);
+              $("#cities-container").empty();
+              displayCards(cityDisplay);
+              displayPageBasedPagination(cityDisplay);
+          });
+
+            //handle the edit button
+             $(document).on("click", "#btn-edit", function () {
+              editCityIdText = $(this)
+                .parents()
+                .parents()
+                .eq(1)
+                .find("div")
+                .find("ul")
+                .find("li[id]")
+                .text();
+              editingCityId = editCityIdText.split(" ")[1];
+              const editingCity = getCitiesById(editingCityId);
+              if (editingCity) {
+                populateUpdateModal(editingCity);
+              } else {
+                console.error('City not found for ID:', editingCityId);
+              }
+            });
+            //Delete the pet and put the pets data structure to the jsonBlob array.
+            $(document).on("click", ".deleteBtn", function () {
+              let parentDiv = $(this).parent().parent().parent();
+              let parentId = parentDiv.attr("id");
+              console.log(typeof parentId)
+              const index = Cities.findIndex((City) => City.cityId === parseInt(parentId));
+              console.log(index)
+              const countryIdx = countries.findIndex((Country)=> Country.country === country);
+              if (index !== -1) {
+                Cities.splice(index, 1);
+                countries[countryIdx].cities = Cities
+                $.ajax({
+                        type: "PUT",
+                        url: "https://jsonblob.com/api/1213499724727705600",
+                        data: JSON.stringify(countries),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                      success: function(xhr,data,response){
+                            console.log(xhr);
+                            console.log(data);
+                            console.log(response);
+                            console.log(response.getAllResponseHeaders());
+                        },
+                        error: function(errMsg) {
+                            alert(errMsg);
+                        }
+                      });
+                $("#cities-container").empty();
+                displayCards(Cities);
+                displayPageBasedPagination(Cities);
+              }
+            });
+            //populate pet information as default value on update modal
+           
+
+            //update pet information when the edit form is submitted
+            $(document).on("click", "#edit-submit", function () {
+              const editingCity = getCitiesById(editingCityId);
+              var updatedCity = {
+                cityId: editingCity.cityId,
+                avatar: editingCity.avatar,
+                city: $("#inputName").val() || editingCity.city,
+                destinations: $("#inputDestination").val() || editingCity.destinations,
+                best_time_to_visit: $("#inputVisit").val() || editingCity.best_time_to_visit,
+                ratings: $("#inputRating").val() || editingCity.ratings,
+                high: $("#High").val() || editingCity.high,
+                low: $("#Low").val() || editingCity.low,
+                description: $("#inputDescription").val() || editingCity.description,
+                places: [],
+              };
+              //update UI depend on new pets array stored in jsonBlob
+              const cityIdx = Cities.findIndex((City)=> City.cityId === parseInt(editingCityId))
+              Cities[cityIdx] = updatedCity;
+              const idx = countries.findIndex((Country)=> Country.country === country)
+              if (idx !== -1) {
+                countries[idx].cities = Cities;
+                $("#cities-container").empty();
+                displayCards(Cities);
+              }
+              console.log(Cities)
+              console.log(countries)
+              $("#update_modal").modal("hide");
+              $.ajax({
+                        type: "PUT",
+                        url: "https://jsonblob.com/api/1213499724727705600",
+                        data: JSON.stringify(countries),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                      success: function(xhr,data,response){
+                            // console.log(xhr);
+                            // console.log(data);
+                            // console.log(response);
+                            // console.log(response.getAllResponseHeaders());
+                        },
+                        error: function(errMsg) {
+                            alert(errMsg);
+                        }
+                      });
+            });
+
+            //This is the section where add pet button is handled.
+            //upload the image file from the user and add it to the jsonBlob.
+            $('#CityImageAdd').change(function(e){
+              const file = e.target.files[0];
+              const reader = new FileReader();
+              reader.onload = function(){
+                imageDataUrl = reader.result;
+              };
+              reader.readAsDataURL(file);
+              const filePath= $("#petImageAdd").val().substring(12);
+              imageFile = `${"../assets/"}${filePath}`;
+              console.log(imageFile);
+            })
+             function generateCityId() {
+                return new Date().getTime();
+              }
+            //When add pet button is clicked we add the new card to the cities-container.
+            $(document).on("click", "#add-submit", function () {
+              var addingCity = {
+                cityId: generateCityId(),
+                avatar: imageFile,
+                city: $("#inputNameAdd").val(),
+                destinations: $("#inputDestinationAdd").val(),
+                best_time_to_visit: $("#inputVisitAdd").val(),
+                ratings: $("#inputRatingAdd").val(),
+                high: $("#HighAdd").val(),
+                low: $("#LowAdd").val(),
+                description: $("#inputDescriptionAdd").val(),
+                palces: []
+              };
+              //update UI depend on new pets array stored in local storage
+              //Using unshift method to add the new pet in index 0.
+              Cities.unshift(addingCity);
+              const idx = countries.findIndex((Country)=> Country.country === country)
+               if (idx !== -1) {
+                countries[idx].cities = Cities;
+                $("#cities-container").empty();
+                displayCards(Cities);
+                displayPageBasedPagination(Cities);
+              }
+              
+              $("#add_modal").modal("hide");
+              $.ajax({
+                        type: "PUT",
+                        url: "https://jsonblob.com/api/1213499724727705600",
+                        data: JSON.stringify(countries),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                      success: function(xhr,data,response){
+                            // console.log(xhr);
+                            // console.log(data);
+                            // console.log(response);
+                            // console.log(response.getAllResponseHeaders());
+                        },
+                        error: function(errMsg) {
+                            alert(errMsg);
+                        }
+                      });
+            });
+          });
+</script>
   </body>
 </html>

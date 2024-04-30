@@ -43,7 +43,7 @@ app.get("/countries/:countryId/cities", (req, res) => {
 });
 
 app.get("/cities/:cityId/places", (req, res) => {
-  res.sendFile(path.join(__dirname, "places.html"));
+  res.sendFile(path.join(__dirname, "../frontend/places.html"));
 });
 
 app.get("/places/:placeId/comments", (req, res) => {
