@@ -461,7 +461,7 @@
                       </ul>
                      </div>
                      <div class="d-flex justify-content-center gap-2 m-3">
-                      <a href="cities.html">
+                      <a>
                       <button class="learn-more">
                         <span class="circle" aria-hidden="true">
                           <span class="icon arrow"></span>
@@ -469,12 +469,12 @@
                         <a class="button-text" href="/cities/${City._id}/places" >Explore</a>
                       </button>
                       </a>
-                        <a data-bs-toggle="modal" data-bs-target="#update_modal"
-                        class="btn btn-dark" id="btn-edit">
-                        <i class="bi bi-pencil-square"></i></a>
-                        <a
-                        class="btn btn-dark" id = "btn-delete">
-                        <i class="bi bi-trash3-fill"></i></a>
+                        <a data-bs-toggle="modal" data-bs-target="#update_modal" class="btn btn-dark btn-edit d-flex align-items-center" id="btn-edit">
+                          <i class="bi bi-pencil-square"></i>
+                        </a>
+                        <a class="btn btn-dark btn-delete d-flex align-items-center" id='btn-delete'>
+                          <i class="bi bi-trash3-fill"></i>
+                        </a>
                     </div>
                   </span>
               </div>`;
@@ -505,27 +505,28 @@
             return Cities.find((city) => city.cityId === id);//return the pet whose id is passed as parameter
           }
           function checkUserInLocalStorage(){
-          const user = localStorage.getItem('user')
-          const navbar = $('.navbar')
-          const authContainer = navbar.find('.auth-container')
-          if(user){
-            $('#btn-edit').css('dsiplay', 'block')
-            $('#btn-delete').css('display', 'block')
-            $('#btn-add').css('display', 'block')
-            const username = JSON.parse(user).name;
-            authContainer.html(`
-            <div>Hi, ${username}</div>
-            <button class = "btn btn-dark"id="logoutBtn">Logout</button>
-            `)
+            const user = localStorage.getItem('user')
+            const authContainer = $('.auth-container')
+            if(user){
+              $('#btn-edit').show()
+              $('.btn-delete').show()
+              $('.btn-add').show()
+              const username = JSON.parse(user).name;
+              authContainer.html(`
+                <div>Hi, ${username}</div>
+                <button class = "btn btn-dark"id="logoutBtn">Logout</button>
+              `)
+            }else{
+              $('#btn-add').hide()
+              $('.btn-edit').hide()
+              $('.btn-delete').hide()
+              authContainer.html(`
+                <button class ="btn btn-dark" data-bs-toggle="modal" data-bs-target="#login_modal" id="loginBtn">Login</button>
+                <button class = "btn btn-dark" data-bs-toggle="modal" data-bs-target="#signup_modal" id="signupBtn">Sign Up</button>
+              `)
+            }
           }
-          else{
-            console.log("No logged in")
-            authContainer.html(`
-             <button class ="btn btn-dark" data-bs-toggle="modal" data-bs-target="#login_modal" id="loginBtn">Login</button>
-             <button class = "btn btn-dark" data-bs-toggle="modal" data-bs-target="#signup_modal" id="signupBtn">Sign Up</button>
-            `)
-          }
-        }
+        
           
         function loginUser(email, password) {
             const foundUser = users.find(

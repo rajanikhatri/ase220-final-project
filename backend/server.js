@@ -47,7 +47,7 @@ app.get("/cities/:cityId/places", (req, res) => {
 });
 
 app.get("/places/:placeId/comments", (req, res) => {
-  res.sendFile(path.join(__dirname, "frontend", "comments.html"));
+  res.sendFile(path.join(__dirname, "../frontend/comments.html"));
 });
 //api routes
 app.use("/v1/user", userRoutes);
