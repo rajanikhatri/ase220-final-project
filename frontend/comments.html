@@ -404,17 +404,15 @@
         }
       }
 
-      function displayComments(comments) {
-        comments = comments.sort(
-          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-        );
-        console.log(comments);
+      async function displayComments(comments) {
+        comments.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         const commentsContainer = document.getElementById("comments-container");
         commentsContainer.innerHTML = "";
-        comments.forEach(async (comment) => {
+        for (let i = 0; i < comments.length; i++) {
+          const comment = comments[i];
           const commentCard = await generateComment(comment);
           commentsContainer.innerHTML += commentCard;
-        });
+        }
       }
 
       function checkUserInLocalStorage() {
