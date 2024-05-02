@@ -6,9 +6,12 @@ const replyController = {
     try {
       const { reply } = req.body;
       const { commentId } = req.params;
+      console.log(reply);
+      console.log(commentId);
 
       const comment = await Comment.findById(commentId);
       if (!comment) {
+        console.log("hi");
         return res.status(404).json("comment not found");
       }
 
@@ -17,7 +20,7 @@ const replyController = {
         createdBy: req.user.id,
         comment: commentId,
       });
-
+      console.log(newReply);
       const savedReply = await newReply.save();
       res.status(201).json(savedReply);
     } catch (err) {
@@ -32,10 +35,6 @@ const replyController = {
       const replies = await Reply.find({ comment: commentId })
         .populate("createdBy", "name email")
         .exec();
-
-      if (!replies || replies.length === 0) {
-        return res.status(404).json("no replies found for this comment");
-      }
 
       res.status(200).json(replies);
     } catch (err) {

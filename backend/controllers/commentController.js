@@ -12,7 +12,6 @@ const commentController = {
         createdBy: req.user.id,
         place: placeId,
       });
-
       const savedComment = await newComment.save();
       res.status(201).json(savedComment);
     } catch (err) {

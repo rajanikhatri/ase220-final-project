@@ -31,12 +31,16 @@
         <div class="text-end">
           <a
             data-bs-toggle="modal"
+            data-bs-target="#add_modal"
             class="btn bg-black text-white me-2 m-3"
             id="btn-add"
             >Add Comment</a
           >
         </div>
-        <div id="comments-container" class="row row-cols-10"></div>
+        <div
+          id="comments-container"
+          class="row row-cols-10 col-9 mx-auto"
+        ></div>
       </div>
     </div>
     <div
@@ -301,386 +305,314 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script>
-      let data = "";
-      let countryName = "";
-      let cityName = "";
-      let placeName = "";
       let comments = [];
+      let replies = [];
       let users = [];
-      let user = JSON.parse(localStorage.getItem("user"));
-      console.log(user);
-      let userId = user?.userId;
-      const apiUrl = "https://jsonblob.com/api/1213499724727705600";
-      const userApiUrl = "https://jsonblob.com/api/1213602404489879552";
 
-      //fetch all data
-      Promise.all([axios.get(apiUrl), axios.get(userApiUrl)])
+      const path = window.location.pathname;
+      const pathParts = path.split("/");
+      const placeId = pathParts[2];
+
+      axios
+        .get("http://localhost:8000/v1/user/all", {})
         .then(function (res) {
-          data = res[0].data;
-          users = res[1].data;
-          countryName = getQueryParam("country");
-          cityName = getQueryParam("city");
-          placeName = getQueryParam("place");
-          comments = findComments(countryName, cityName, placeName);
+          users = res.data;
+          console.log(users);
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
+
+      axios
+        .get(`http://localhost:8000/v1/places/${placeId}/comments`, {})
+        .then(function (res) {
+          comments = res.data;
+          console.log(comments);
           displayComments(comments);
         })
         .catch(function (err) {
           console.log(err);
         });
 
-      function getQueryParam(key) {
-        let queryParams = new URLSearchParams(window.location.search);
-        return queryParams.has(key) ? queryParams.get(key) : null;
-      }
-
-      function findComments(countryName, cityName, placeName) {
-        const country = data.find((country) => country.country === countryName);
-        if (!country) {
-          console.log("country not found");
-          return;
-        }
-        const city = country.cities.find((city) => city.city === cityName);
-        if (!city) {
-          console.log("city not found");
-          return;
-        }
-        const place = city.places.find((place) => place.place === placeName);
-        if (!place) {
-          console.log("place not found");
-          return;
-        }
-        return place.comments;
-      }
-
-      function getUser(userId) {
-        console.log(userId);
-        const neededUser = users.find((user) => user.userId === userId);
-        return neededUser;
-      }
-
-      function generateComment(comment) {
+      async function generateComment(comment) {
         let repliesHtml = "";
-        if (comment.replies && comment.replies.length > 0) {
-          for (let reply of comment.replies) {
-            let replyUser = getUser(reply.userId);
-            let replyUsername = replyUser ? replyUser.name : "Unknown User";
-            repliesHtml += `
+        try {
+          const res = await axios.get(
+            `http://localhost:8000/v1/comments/${comment._id}/replies`
+          );
+          const replies = res.data;
+          if (replies && replies.length > 0) {
+            for (let reply of replies) {
+              repliesHtml += `
                 <div style="margin-left: 50px;">
-                    <div class="card  mb-3 mx-auto">
-                    <div class="card-body d-flex justify-content-between">
-                            <div class="d-flex flex-column align-items-start">
-                                <div class='d-flex gap-2'>
-                                    <i class="bi bi-person-circle "></i>
-                                    <h6 class="card-title">${replyUsername}</h6>    
+                    <div class="card mb-3 mx-auto d-flex flex-coul">
+                            <div class="card-body d-flex flex-column">
+                                <div class="d-flex justify-content-between">
+                                    <div class='d-flex gap-2'>
+                                        <i class="bi bi-person-circle"></i>
+                                        <h5 class="card-title">${
+                                          reply.createdBy?.name || "Unknown"
+                                        }</h5>
+                                        <span class="card-title opacity-50">${
+                                          reply.createdBy?.email || "No Email"
+                                        }</span>
+                                    </div>
                                 </div>
-                                <p class="card-text">${reply.reply}</p>
-                            </div>
+                                <p class="card-text d-flex opacity-75 fs-6">
+                                    ${reply.reply}</p>
+                                </div>
                     </div>
-                </div>
+
                 </div>`;
+            }
           }
-        }
-        let commentUser = getUser(comment.userId);
-        let commentUsername = commentUser ? commentUser.name : "Unknown User";
-
-        const commentCard = `
-           <div>
-             <div class="card  mb-3 mx-auto">
-               <div class="card-body ">
-                    <div class="">
-                        <div class='d-flex gap-2'>
-                                    <i class="bi bi-person-circle "></i>
-                                    <h5 class="card-title">${commentUsername}</h5>    
-                                </div>
-                       
-                        <p class="card-text">${comment.comment}</p>
+          const commentCard = `
+            <div>
+                <div class="card mb-3 mx-auto">
+                <div class="card-body">
+                    <div class='d-flex gap-2'>
+                    <i class="bi bi-person-circle"></i>
+                    <div class='d-flex gap-3'>
+                        <h5 class="card-title">${
+                          comment.createdBy?.name || "Anonymous"
+                        }</h5>
+                        <span class="card-title opacity-50">${
+                          comment.createdBy?.email || "No Email"
+                        }</span>
                     </div>
-                    <div class="d-flex align-items-center gap-5 mt-2">
-                        <a
-                            data-bs-toggle="modal"
-                            class="btn bg-black text-white reply-btn d-flex gap-1"
-                            id="${comment.commentId}"
-                            ><i class="bi bi-reply-fill"></i>Reply</a
-                        >
-                       
+                    </div>
+                    <p class="card-text d-flex opacity-75 fs-6">${
+                      comment.comment
+                    }</p>
+                    <div class="d-flex align-items-center justify-content-between fs-8">
+                        <a data-bs-toggle="modal" class="btn bg-black text-white reply-btn d-flex gap-1 fs-8" id="${
+                          comment._id
+                        }">
+                            <i class="bi bi-reply-fill fs-8"></i> Reply
+                        </a>
+
                     </div>
                 </div>
-            </div>
-            <div class="replies ">
+                </div>
+                <div class="replies">
                 ${repliesHtml}
-            </div>
+                </div>
             </div>`;
-        return commentCard;
-      }
-
-      function handleUpvote(commentId) {
-        const comment = comments.find((cmt) => cmt.commentId === commentId);
-        if (comment) {
-        }
-      }
-
-      function handleDownvote(commentId) {
-        const comment = comments.find((cmt) => cmt.commentId === commentId);
-        if (comment) {
+          return commentCard;
+        } catch (err) {
+          console.error("error fetching replies:", err);
         }
       }
 
       function displayComments(comments) {
-        for (let i = 0; i < comments.length; i++) {
-          document.getElementById("comments-container").innerHTML +=
-            generateComment(comments[i]);
-        }
-      }
-
-      function updateJsonData(updatedData) {
-        return axios
-          .put(apiUrl, updatedData)
-          .then((res) => {
-            console.log(res.data);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }
-
-      function generateCommentId() {
-        return new Date().getTime();
+        comments = comments.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
+        console.log(comments);
+        const commentsContainer = document.getElementById("comments-container");
+        commentsContainer.innerHTML = "";
+        comments.forEach(async (comment) => {
+          const commentCard = await generateComment(comment);
+          commentsContainer.innerHTML += commentCard;
+        });
       }
 
       function checkUserInLocalStorage() {
         const user = localStorage.getItem("user");
-        const navbar = $(".navbar");
-        const authContainer = navbar.find(".auth-container");
+        const authContainer = $(".auth-container");
         if (user) {
           const username = JSON.parse(user).name;
           authContainer.html(`
             <div>Hi, ${username}</div>
             <button class = "btn btn-dark"id="logoutBtn">Logout</button>
-            `);
+          `);
+          $("#btn-add").show();
         } else {
+          $("#btn-add").hide();
           authContainer.html(`
-             <button class ="btn btn-dark" data-bs-toggle="modal" data-bs-target="#login_modal" id="loginBtn">Login</button>
-             <button class = "btn btn-dark" data-bs-toggle="modal" data-bs-target="#signup_modal" id="signupBtn">Sign Up</button>
-            `);
+            <button class ="btn btn-dark" data-bs-toggle="modal" data-bs-target="#login_modal" id="loginBtn">Login</button>
+            <button class = "btn btn-dark" data-bs-toggle="modal" data-bs-target="#signup_modal" id="signupBtn">Sign Up</button>
+          `);
         }
       }
 
       function loginUser(email, password) {
-        const foundUser = users.find(
-          (user) => user.email === email && user.password === password
-        );
-        if (foundUser) {
-          const { userId, name, email } = foundUser; // Destructure user properties
-          console.log("login");
-          const user = {
-            userId: userId,
-            name: name,
-            email: email,
-          };
-          localStorage.setItem("user", JSON.stringify(user));
-          checkUserInLocalStorage();
-          $("#login_modal").modal("hide");
-        } else {
-          console.log("cant login");
-          $("#loginError").text("Email or password not found");
-        }
+        axios
+          .post(
+            "http://localhost:8000/v1/user/login",
+            { email: email, password: password },
+            { headers: { "Content-Type": "application/json" } }
+          )
+          .then((res) => {
+            const { accessToken, name } = res.data;
+            localStorage.setItem("user", JSON.stringify({ name, accessToken }));
+            $("#login_modal").modal("hide");
+            checkUserInLocalStorage();
+          })
+          .catch((err) => {
+            console.log(err);
+            $(".loginError").text("Invalid email or password.");
+          });
       }
 
       function signupUser(username, email, password) {
-        const existingUser = users.find((user) => user.email === email);
-        if (existingUser) {
-          $("#signupError").text(
-            "Email already exists. Please use a different email"
-          );
-          return;
-        }
-        const newUser = {
-          userId: users.length + 1,
-          name: username,
-          email: email,
-          password: password,
-        };
-        const newLocalUser = {
-          userId: users.length + 1,
-          name: username,
-          email: email,
-        };
-        console.log(newUser);
-        users.push(newUser);
         axios
-          .put(userApiUrl, users)
+          .post("http://localhost:8000/v1/user/", {
+            name: username,
+            email: email,
+            password: password,
+          })
           .then((res) => {
-            console.log(res.data);
+            const { name, accessToken } = res.data;
+            localStorage.setItem("user", JSON.stringify({ name, accessToken }));
+            $("#signup_modal").modal("hide");
+            checkUserInLocalStorage();
+          })
+          .catch((err) => {
+            console.log(err);
+            $(".signupError").text("Error during registration. Try again.");
+          });
+      }
+      function logoutUser() {
+        const accessToken = JSON.parse(
+          localStorage.getItem("user")
+        ).accessToken;
+        axios
+          .post(
+            "http://localhost:8000/v1/user/logout",
+            {},
+            {
+              headers: {
+                token: `Bearer ${accessToken}`,
+              },
+            }
+          )
+          .then((res) => {
+            localStorage.removeItem("user");
+            checkUserInLocalStorage();
           })
           .catch((err) => {
             console.log(err);
           });
+      }
 
-        localStorage.setItem("user", JSON.stringify(newLocalUser));
-        $("#signupError").text("");
-        checkUserInLocalStorage();
-        $("#signup_modal").modal("hide");
+      function createComment(commentData) {
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (!user || !user.accessToken) {
+          console.log("User not authenticated");
+          return;
+        }
+        const accessToken = user.accessToken;
+        axios
+          .post(
+            `http://localhost:8000/v1/places/${placeId}/comments`,
+            commentData,
+            {
+              headers: {
+                token: `Bearer ${accessToken}`,
+                "Content-Type": "application/json",
+              },
+            }
+          )
+          .then((res) => {
+            console.log("comment created: ", res.data);
+            $("#add_modal").modal("hide");
+            axios
+              .get(`http://localhost:8000/v1/places/${placeId}/comments`, {
+                headers: {
+                  token: `Bearer ${accessToken}`,
+                },
+              })
+              .then((response) => {
+                comments = response.data;
+                $("#comments-container").empty();
+                console.log(comments);
+                displayComments(comments);
+              });
+          });
+      }
+
+      function createReply(replyData, commentId) {
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (!user || !user.accessToken) {
+          console.log("User not authenticated");
+          return;
+        }
+        const accessToken = user.accessToken;
+        axios
+          .post(
+            `http://localhost:8000/v1/comments/${commentId}/replies`,
+            replyData,
+            {
+              headers: {
+                token: `Bearer ${accessToken}`,
+                "Content-Type": "application/json",
+              },
+            }
+          )
+          .then((res) => {
+            console.log("reply created: ", res.data);
+            $("#reply_modal").modal("hide");
+            $("#comments-container").empty();
+            displayComments(comments);
+          });
       }
 
       $(document).ready(function () {
         checkUserInLocalStorage();
         $(document).on("click", "#logoutBtn", function () {
-          localStorage.removeItem("user");
-          location.reload();
+          logoutUser();
         });
+
         $("#login_modal form").submit(function (e) {
           e.preventDefault();
           const email = $("#loginEmail").val();
           const password = $("#loginPassword").val();
           loginUser(email, password);
         });
+
         $("#signup_modal form").submit(function (e) {
           e.preventDefault();
           const username = $("#signupUsername").val();
           const email = $("#signupEmail").val();
           const password = $("#signupPassword").val();
-          console.log("signup");
           signupUser(username, email, password);
+        });
+
+        $(document).on("click", "#login-btn", function () {
+          $("#signup_modal").modal("hide");
+          $("#login_modal").modal("show");
+        });
+
+        $(document).on("click", "#signup-btn", function () {
+          $("#signup_modal").modal("show");
+          $("#login_modal").modal("hide");
         });
       });
 
       $(() => {
-        $(document).on("click", ".login-btn", function (e) {
-          console.log("khanh");
-          $("#signup_modal").modal("hide");
-          $("#login_modal").modal("show");
-        });
-        $(document).on("click", ".signup-btn", function (e) {
-          console.log("khanh1");
-          $("#signup_modal").modal("show");
-          $("#login_modal").modal("hide");
-        });
-        //handle login before add comment and reply
-        $(document).on("click", "#btn-add", function (e) {
-          user = localStorage.getItem("user");
-          console.log("add comment");
-          if (!user) {
-            $("#login_modal").modal("show");
-            e.preventDefault();
-            return;
-          } else {
-            $("#add_modal").modal("show");
-          }
-        });
-        $(document).on("click", ".reply-btn", function (e) {
-          user = localStorage.getItem("user");
-          if (!user) {
-            $("#login_modal").modal("show");
-            e.preventDefault();
-            return;
-          } else {
-            $("#reply_modal").modal("show");
-          }
-        });
-        //add comment
+        //add comment - done
         $(document).on("click", "#add-submit", function () {
-          user = JSON.parse(localStorage.getItem("user"));
-          userId = user?.userId;
-          var newComment = {
-            userId: userId,
-            commentId: generateCommentId(),
+          var commentData = {
             comment: $("#commentAdd").val(),
-            upvoteUserId: [],
-            downvoteUserId: [],
-            replies: [],
           };
-          console.log(newComment);
-
-          const countryId = data.findIndex(
-            (country) => country.country === countryName
-          );
-          if (countryId !== -1) {
-            const cityId = data[countryId].cities.findIndex(
-              (city) => city.city === cityName
-            );
-            if (cityId !== -1) {
-              const placeId = data[countryId].cities[cityId].places.findIndex(
-                (place) => place.place === placeName
-              );
-              if (placeId !== -1) {
-                data[countryId].cities[cityId].places[placeId].comments.push(
-                  newComment
-                );
-                // comments.push(newComment);
-                updateJsonData(data);
-              } else {
-                console.log("place not found");
-              }
-            } else {
-              console.log("city not found");
-            }
-          } else {
-            console.log("country not found");
-          }
-
-          $("#commentAdd").val("");
-          $("#comments-container").empty();
-          displayComments(comments);
-          $("#add_modal").modal("hide");
+          createComment(commentData);
         });
+      });
 
-        //add reply
-        $(document).on("click", "#reply-submit", function () {
-          var newReply = {
-            userId: userId,
-            reply: $("#replyAdd").val(),
-          };
-          const commentId = parseInt($("#reply_modal").data("commentId"));
-          //   console.log(commentId);
+      $(document).on("click", ".reply-btn", function () {
+        const commentId = $(this).attr("id");
+        $("#reply_modal").data("commentId", commentId);
+        $("#reply_modal").modal("show");
+      });
 
-          const countryId = data.findIndex(
-            (country) => country.country === countryName
-          );
-          if (countryId !== -1) {
-            const cityId = data[countryId].cities.findIndex(
-              (city) => city.city === cityName
-            );
-            if (cityId !== -1) {
-              const placeId = data[countryId].cities[cityId].places.findIndex(
-                (place) => place.place === placeName
-              );
-              if (placeId !== -1) {
-                const commentIdx = data[countryId].cities[cityId].places[
-                  placeId
-                ].comments.findIndex(
-                  (comment) => comment.commentId === commentId
-                );
-                if (commentIdx !== -1) {
-                  data[countryId].cities[cityId].places[placeId].comments[
-                    commentIdx
-                  ].replies.push(newReply);
-
-                  //   comments[commentIdx].replies.push(newReply);
-                  console.log(comments);
-                  updateJsonData(data);
-                } else {
-                  console.log("comment not found");
-                }
-              } else {
-                console.log("place not found");
-              }
-            } else {
-              console.log("city not found");
-            }
-          } else {
-            console.log("country not found");
-          }
-
-          $("#replyAdd").val("");
-          $("#comments-container").empty();
-          displayComments(comments);
-          $("#reply_modal").modal("hide");
-        });
-
-        $(document).on("click", ".reply-btn", function () {
-          commentId = $(this).attr("id");
-          $("#reply_modal").data("commentId", commentId);
-        });
+      //add reply
+      $(document).on("click", "#reply-submit", function () {
+        const commentId = $("#reply_modal").data("commentId");
+        var replyData = {
+          reply: $("#replyAdd").val(),
+        };
+        createReply(replyData, commentId);
       });
     </script>
   </body>
