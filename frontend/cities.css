@@ -127,18 +127,18 @@ body {
 .card-body {
   text-align: center;
 }
-#id {
+/* #id {
   display: none;
-}
-#btn-delete {
+} */
+/* #btn-delete {
   display: none;
 }
 #btn-edit {
   display: none;
-}
-#btn-add {
+} */
+/* #btn-add {
   display: none;
-}
+} */
 .review {
   font-size: 16px;
   transition: font-size 0.57s ease;

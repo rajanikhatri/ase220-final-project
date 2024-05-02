@@ -5,7 +5,6 @@ const countryController = {
     try {
       const { country, message, avatar, ratings } = req.body;
       const createdBy = req.user.id;
-
       const newCountry = new Country({
         country,
         message,

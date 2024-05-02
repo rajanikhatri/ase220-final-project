@@ -37,7 +37,7 @@
         <div class="mt-4">
           <div class="row">
             <div class="col">
-              <a data-bs-toggle="modal" data-bs-target="#add_modal" class="btn btn-dark" id="btn-add">
+              <a data-bs-toggle="modal" data-bs-target="#add_modal" class="btn btn-dark btn-add" id="btn-add">
                 <i class="bi bi-plus-circle"></i>
               </a>
             </div>
@@ -232,8 +232,8 @@
           <div class="card-body d-flex flex-column">
             <form>
               <div class="mb-3">
-                  <label for="formFile" class="form-label">Country Image</label>
-                  <input type="file" class="form-control" id="countryImageAdd" />
+                  <label for="inputImage" class="form-label">Country Image URL</label>
+                  <input type="text" class="form-control" id="inputImageAdd" />
                 </div>
               <div class="mb-3">
                 <label for="inputcountry" class="form-label">Country Name</label>
@@ -284,13 +284,17 @@
     var offset = 0;
     var rpp = 9;
     var pages = 0;
-    var editingCountryId = -1;
-    var addingCountryId = -1;
+    let editingCountryId = null;
+    let addingCountryId = null;
 
     let users = []
     let Countries = []
 
     const scrollToTopButton = document.getElementById('scroll-to-top-button');
+
+    $(document).ready(function() {
+     
+    });
 
     axios
     .get('http://localhost:8000/v1/countries', {})
@@ -302,7 +306,7 @@
         Countries.forEach(country => {
             options += `<option value="${country.country}">${country.country}</option>`;
         });
-        selectElement.append(options);
+        selectElement.append(options); 
         displayCards(Countries);
         displayPageBasedPagination(Countries);
       }).catch(function(err){
@@ -318,6 +322,7 @@
       .catch(function (err) {
         console.log(err);
       });
+
 
     function displayPageBasedPagination(country) {
         rpp = 9;
@@ -357,7 +362,7 @@
 
       function generateCard(Country) {
            const cardHTML = `
-            <div class="col cards my-2" id = ${Country._id}>
+            <div class="col cards my-2" ids=${Country._id}>
             <span class="card h-100">
                 <div class="position-relative">
                 <div>
@@ -391,20 +396,20 @@
                 </ul>
             </div>
             <div class="d-flex justify-content-center gap-2 m-3">
-                <a href="cities.html">
+                  <a>
                     <button class="learn-more">
-                    <span class="circle" aria-hidden="true">
+                      <span class="circle" aria-hidden="true">
                         <span class="icon arrow"></span>
-                    </span>
-                    <a class="button-text" href="/countries/${Country._id}/cities" >Explore</a>
+                      </span>
+                      <a class="button-text" href="/countries/${Country._id}/cities" >Explore</a>
                     </button>
-                    </a>
-                <a data-bs-toggle="modal" data-bs-target="#update_modal"
-                class="btn btn-dark " id="btn-edit">
-                <i class="bi bi-pencil-square"></i></a>
-                <a
-                class="btn btn-dark" id ="btn-delete">
-                <i class="bi bi-trash3-fill"></i></a>
+                  </a>
+                <a data-bs-toggle="modal" data-bs-target="#update_modal" class="btn btn-dark btn-edit" id="btn-edit">
+                  <i class="bi bi-pencil-square"></i>
+                </a>
+                <a class="btn btn-dark btn-delete" id='btn-delete'>
+                  <i class="bi bi-trash3-fill"></i>
+                </a>
             </div>
             </span>
         </div>`;
@@ -435,6 +440,7 @@
       }
 
       function populateUpdateModal(Country) {
+        console.log(Country)
         document.getElementById("inputcountry").value = Country.country || "";
         document.getElementById("inputRating").value = Country.ratings || "";
         document.getElementById("inputDescription").value = Country.message || "";
@@ -550,14 +556,21 @@
 
       function checkUserInLocalStorage(){
         const user = localStorage.getItem('user')
+        console.log(user)
         const authContainer = $('.auth-container')
         if(user){
+          $('#btn-edit').show()
+          $('.btn-delete').show()
+          $('.btn-add').show()
           const username = JSON.parse(user).name;
           authContainer.html(`
             <div>Hi, ${username}</div>
             <button class = "btn btn-dark"id="logoutBtn">Logout</button>
           `)
         }else{
+          $('#btn-add').hide()
+          $('.btn-edit').hide()
+          $('.btn-delete').hide()
           authContainer.html(`
             <button class ="btn btn-dark" data-bs-toggle="modal" data-bs-target="#login_modal" id="loginBtn">Login</button>
             <button class = "btn btn-dark" data-bs-toggle="modal" data-bs-target="#signup_modal" id="signupBtn">Sign Up</button>
@@ -572,19 +585,22 @@
             console.log("User not authenticated");
             return;
         }
-
         const accessToken = user.accessToken
-        console.log(accessToken)
         axios.delete(`http://localhost:8000/v1/countries/${countryId}`,  {
             headers: {
                 token: `Bearer ${accessToken}`, 
             },
         }).then((res)=> {
             console.log(res.data);
-            const cardToDelete = $(`#${countryId}`); 
-            cardToDelete.remove(); 
-
-            
+            axios.get('http://localhost:8000/v1/countries', {
+                headers: {
+                    token: `Bearer ${accessToken}`
+                }
+            }).then((response)=> {
+                Countries = response.data;
+                $("#country-container").empty();
+                displayCards(Countries); 
+            })
         })
       }
 
@@ -594,7 +610,6 @@
             console.log("User not authenticated");
             return;
         }
-
         const accessToken = user.accessToken
         console.log(accessToken)
 
@@ -606,7 +621,15 @@
         }).then((res)=> {
             console.log('country created: ', res.data)
             $("#add_modal").modal("hide");
-            window.location.href = "/countries"; 
+            axios.get('http://localhost:8000/v1/countries', {
+                headers: {
+                    token: `Bearer ${accessToken}`
+                }
+            }).then((response)=> {
+                Countries = response.data;
+                $("#country-container").empty();
+                displayCards(Countries); 
+            })
         })
       }
 
@@ -636,7 +659,6 @@
            
         })
       }
-
     
         $(() => {
             //Handle the search button
@@ -661,9 +683,8 @@
         });
         //DELETE----DONE
           $(document).on("click", ".btn-delete", function () {
-            let parentDiv = $(this).parent().parent().parent();
-            let countryId = parentDiv.attr("id");
-            console.log(countryId)
+            let countryId = $(this).closest(".cards").attr("ids");
+            console.log( $(this).closest(".cards"))
             if (countryId) {
               deleteCountry(countryId)
               $("#country-container").empty();
@@ -674,13 +695,14 @@
 
           //POPULATE UPDATE - DONE
           $(document).on("click", "#btn-edit", function () {
-            editingCountryId = ($(this).parents().parents().eq(1).attr('id'))
-            const editingCountry = getCountryById(editingCountryId);
+            editingCountryId = $(this).closest(".cards").attr("ids");
+            editingCountry = getCountryById(editingCountryId);
             populateUpdateModal(editingCountry);
           });
 
           //UPDATE--------DONE
           $(document).on("click", "#edit-submit", function () {
+            console.log(editingCountryId)
             const editingCountry = getCountryById(editingCountryId);
             var updatedCountry = {
               avatar: editingCountry.avatar,

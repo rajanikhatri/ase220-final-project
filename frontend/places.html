@@ -505,6 +505,9 @@
           const navbar = $('.navbar')
           const authContainer = navbar.find('.auth-container')
           if(user){
+            $('#btn-edit').css('dsiplay', 'block')
+            $('#btn-delete').css('display', 'block')
+            $('#btn-add').css('display', 'block')
             const username = JSON.parse(user).name;
             authContainer.html(`
             <div>Hi, ${username}</div>
