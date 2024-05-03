@@ -66,12 +66,15 @@ A web application designed to provide users with a platform to explore and disco
 3. Serve the frontend files using a static file server or development server.
 4. Open a web browser and go to `http://localhost:8000/` (adjust the port if needed) to interact with the application.
 
+## Future Development
+- Implement refresh token functionality in the frontend to generate new access tokens.
+- Fully integrate edit and delete functionality for comments and replies in the frontend.
+- Explore additional authentication security features and user roles for expanded functionality.
+
 ## Contributions
 - **Khanh Nguyen**: Handled backend development, including setting up database models, creating controllers, and defining routes. Designed the API endpoints and implemented logic to handle HTTP requests. Additionally, transitioned data handling from using JSON blobs to a backend-driven approach, creating API calls that enabled the frontend to interact with the backend, specifically for the `index.html` and `comments.html` pages.
 - **Bhuwan**: 
 - **Rajani**: 
 
-## Future Development
-- Implement refresh token functionality in the frontend to generate new access tokens.
-- Fully integrate edit and delete functionality for comments and replies in the frontend.
-- Explore additional authentication security features and user roles for expanded functionality.
+## Demo Video
+Link: 
