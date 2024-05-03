@@ -404,7 +404,7 @@
                       <a class="button-text" href="/countries/${Country._id}/cities" >Explore</a>
                     </button>
                   </a>
-                <a data-bs-toggle="modal" data-bs-target="#update_modal" class="btn btn-dark btn-edit d-flex align-items-center" id="btn-edit">
+                <a class="btn btn-dark btn-edit d-flex align-items-center" id="btn-edit">
                   <i class="bi bi-pencil-square"></i>
                 </a>
                 <a class="btn btn-dark btn-delete d-flex align-items-center" id='btn-delete'>
@@ -695,19 +695,34 @@
         });
         //DELETE----DONE
           $(document).on("click", ".btn-delete", function () {
-            let countryId = $(this).closest(".cards").attr("ids");
-            console.log( $(this).closest(".cards"))
-            if (countryId) {
-              deleteCountry(countryId)
-             
+            const user = localStorage.getItem('user')
+            if(!user){
+              console.log('hi')
+               $("#login_modal").modal("show");
+            }else{
+              let countryId = $(this).closest(".cards").attr("ids");
+              console.log( $(this).closest(".cards"))
+              if (countryId) {
+                deleteCountry(countryId)
+              
+              }
             }
           });
 
           //POPULATE UPDATE - DONE
           $(document).on("click", "#btn-edit", function () {
-            editingCountryId = $(this).closest(".cards").attr("ids");
-            editingCountry = getCountryById(editingCountryId);
-            populateUpdateModal(editingCountry);
+            const user = localStorage.getItem('user')
+            if(!user){
+               console.log('hi')
+               
+               $("#login_modal").modal("show");
+                $("#update_modal").modal("hide");
+            }else{
+              editingCountryId = $(this).closest(".cards").attr("ids");
+              editingCountry = getCountryById(editingCountryId);
+              populateUpdateModal(editingCountry);
+               $("#update_modal").modal("show");
+            }
           });
 
           //UPDATE--------DONE
