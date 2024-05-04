@@ -74,7 +74,7 @@ A web application designed to provide users with a platform to explore and disco
 ## Contributions
 - **Khanh Nguyen**: Handled backend development, including setting up database models, creating controllers, and defining routes. Designed the API endpoints and implemented logic to handle HTTP requests. Additionally, transitioned data handling from using JSON blobs to a backend-driven approach, creating API calls that enabled the frontend to interact with the backend, specifically for the `index.html` and `comments.html` pages.
 - **Bhuwan**: 
-- **Rajani**: 
+- **Rajani**: Authentication collaboration , MongoDB data collection, Search implementation.
 
 ## Demo Video
-Link: 
+Link: https://app.weet.co/play/52e31e4f/create-video-tutorials-with-weet
